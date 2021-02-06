@@ -31,7 +31,8 @@ import com.cg.boot.service.IMessageService;
 public class MessageController {
 	@Autowired
 	IMessageService messageService;
-	Logger logger=LoggerFactory.getLogger(MessageController.class);
+	Logger logger = LoggerFactory.getLogger(MessageController.class);
+
 	/**
 	 * This method accepts and saves message which user has inserted through object.
 	 * Return an object of message containing all arguments which has been saved.
@@ -89,7 +90,7 @@ public class MessageController {
 	@GetMapping("/getMessagesByStudentId/{studentId}")
 	public ResponseEntity<List<Message>> getMessagesByStudentId(@PathVariable("studentId") int studentId) {
 		List<Message> messageList = messageService.getMessagesByStudentId(studentId);
-		logger.info("Message Details Found with Student ID "+studentId);
+		logger.info("Message Details Found with Student ID " + studentId);
 		return new ResponseEntity<List<Message>>(messageList, HttpStatus.OK);
 	}
 
@@ -122,7 +123,7 @@ public class MessageController {
 	public ResponseEntity<List<Message>> deleteMessage(@PathVariable("messageId") int messageId,
 			@PathVariable("userId") int userId) {
 		List<Message> messageList = messageService.deleteMessage(messageId, userId);
-		logger.info("Message Details Deleted with Id "+messageId);
+		logger.info("Message Details Deleted with Id " + messageId);
 		return new ResponseEntity<List<Message>>(messageList, HttpStatus.OK);
 	}
 

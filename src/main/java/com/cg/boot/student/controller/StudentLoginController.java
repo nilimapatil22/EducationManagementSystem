@@ -20,9 +20,9 @@ public class StudentLoginController {
 	Logger logger=LoggerFactory.getLogger(StudentLoginController.class);
 	
 	@GetMapping("/getStudent/{id}/{password}")
-	public String getUser(@PathVariable("id") int id,@PathVariable("password") String password){
+	public String getUser(@PathVariable("id") int studentId,@PathVariable("password") String password){
 		@SuppressWarnings("unused")
-		User user = loginService.getUser(id,password);
+		User user = loginService.getStudentLogin(studentId,password);
 		logger.info("Student Login Successfully");
 		return "Login Successful";
 		

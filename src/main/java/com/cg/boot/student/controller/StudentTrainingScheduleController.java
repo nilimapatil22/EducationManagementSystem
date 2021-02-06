@@ -15,13 +15,24 @@ import com.cg.boot.exceptions.DataNotFoundException;
 import com.cg.boot.model.TrainingSchedule;
 import com.cg.boot.service.ITrainingScheduleService;
 
+/**
+ * @author Priyanka
+ *
+ */
+
 @RestController
 public class StudentTrainingScheduleController {
 	@Autowired
 	ITrainingScheduleService scheduleService;
-	Logger logger=LoggerFactory.getLogger(StudentTrainingScheduleController.class);
-	/*
-	 * Get schedule based on schedule id
+	Logger logger = LoggerFactory.getLogger(StudentTrainingScheduleController.class);
+
+	/**
+	 * This method accepts schedule Id which user has inserted. Return response
+	 * entity containing training schedule details based on schedule Id.
+	 * 
+	 * @param scheduleId : {@link Integer}
+	 * @return {@link ResponseEntity}: trainingSchedule {@link TrainingSchedule},
+	 *         {@link HttpStatus}
 	 */
 	@GetMapping("/getStudentSchedule/{scheduleId}")
 	public ResponseEntity<TrainingSchedule> getSchedule(@PathVariable("scheduleId") int scheduleId) {
@@ -34,14 +45,19 @@ public class StudentTrainingScheduleController {
 		return new ResponseEntity<TrainingSchedule>(trainingSchedule, HttpStatus.OK);
 
 	}
-	
-	/*
-	 * Get schedules based on student id
+
+	/**
+	 * This method accepts student Id which user has inserted. Return response
+	 * entity containing list of training schedule details based on student Id.
+	 * 
+	 * @param studentId : {@link Integer}
+	 * @return {@link ResponseEntity}: trainingSchedulesList {@link List},
+	 *         {@link HttpStatus}
 	 */
 	@GetMapping("/getStudentScheduleByStudentId/{studentId}")
 	public ResponseEntity<List<TrainingSchedule>> getScheduleByStudentId(@PathVariable("studentId") int studentId) {
 		List<TrainingSchedule> trainingSchedules = scheduleService.getScheduleByStudentId(studentId);
-		logger.info("Training schedule return successfully with ID "+studentId);
+		logger.info("Training schedule return successfully with ID " + studentId);
 		return new ResponseEntity<List<TrainingSchedule>>(trainingSchedules, HttpStatus.OK);
 	}
 }

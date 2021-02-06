@@ -19,15 +19,48 @@ public class LoginService implements ILoginService {
 	@Autowired
 	UserRepository repository;
 	Logger logger=LoggerFactory.getLogger(LoginController.class);
-
+	
 	@Override
-	public User getUser(int id, String password) {
-		User user = repository.findById(id).orElse(null);
+	public User getAdminLogin(int adminId, String password) {
+		User user = repository.findById(adminId).orElse(null);
 		if (user == null) {
-			logger.warn("User with  id "+id+" not present");
+			logger.warn("User with  id "+adminId+" not present");
+            throw new DataNotFoundException("User with given id  not present");
+		}
+		if(!user.getRoleType().equals("admin")) {
+			logger.warn("Invalid User Id");
+            throw new DataNotFoundException("Invalid Id");
+		}
+		if (!user.getPassword().equals(password)) {
+			logger.warn("User with  passwors "+password+" not present");
+            throw new DataNotFoundException("Invalid Password");
+		}
+
+		return user;
+
+	}
+	
+	@Override
+	public User getStudentLogin(int studentId, String password) {
+		User user = repository.findById(studentId).orElse(null);
+		if (user == null) {
+			logger.warn("User with  id "+studentId+" not present");
+
 			throw new DataNotFoundException("User with given id  not present");
+<<<<<<< HEAD
 		} else if (!user.getPassword().equals(password)) {
 			logger.warn("User with given  password not present");
+=======
+		}
+		if(!user.getRoleType().equals("student")) {
+			logger.warn("Invalid Id");
+
+			throw new DataNotFoundException("Invalid Id");
+		}
+		if (!user.getPassword().equals(password)) {
+			logger.warn("User with  passwors "+password+" not present");
+
+>>>>
 			throw new DataNotFoundException("Invalid Password");
 		}
 
