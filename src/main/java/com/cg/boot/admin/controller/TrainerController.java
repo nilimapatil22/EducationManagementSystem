@@ -83,20 +83,7 @@ public class TrainerController {
 		logger.info("All Trainer Details  Successfully ");
 		return new ResponseEntity<List<Trainer>>(getTrainers, HttpStatus.OK);
 	}
-	
-	/**
-	 * This method accepts student Id which user has inserted. Return response
-	 * entity containing list of trainer details based on student Id.
-	 * 
-	 * @param studentId : {@link Integer}
-	 * @return {@link ResponseEntity}: messageList {@link List}, {@link HttpStatus}
-	 */
-	@GetMapping("/getTrainersByStudentId/{studentId}")
-	public ResponseEntity<List<Trainer>> getTrainerByStudentId(@PathVariable("studentId") int studentId) {
-		List<Trainer> trainerList = trainerService.getTrainerByStudentId(studentId);
-		logger.info("Trainer Details Found with Student ID "+studentId);
-		return new ResponseEntity<List<Trainer>>(trainerList, HttpStatus.OK);
-	}
+
     
 	/**
 	 * This method accepts and update courses which user has inserted through

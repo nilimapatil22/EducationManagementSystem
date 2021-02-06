@@ -192,21 +192,5 @@ public class TrainerService implements ITrainerService {
 		return repository.findAll();
 	}
 
-	/**
-	 * This method finds trainer by passed student Id. Returns list of trainers
-	 * based on student Id. Check whether list of trainers is empty or not.
-	 * 
-	 * @param studentId : {@link Integer}
-	 * @return {@link List}
-	 */
-	@Override
-	public List<Trainer> getTrainerByStudentId(int studentId) {
-		List<Trainer> list = repository.findAllByStudentId(studentId);
-		if (list.isEmpty()) {
-			logger.warn("No trainer are present with given student id: " + studentId);
-			throw new DataNotFoundException("No trainer are present with given student id: " + studentId);
-		}
-		return list;
-	}
 
 }
