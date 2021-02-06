@@ -21,6 +21,8 @@ public interface ICourseService {
 
 	ChooseCourse getChoosedCourseDetails(int courseId, int studentId);
 
+	List<Course> getCoursesByStudentId(int studentId);
+
 	
 
 }
