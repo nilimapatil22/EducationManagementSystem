@@ -15,15 +15,32 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.boot.exceptions.DataNotFoundException;
 import com.cg.boot.model.ChooseCourse;
+import com.cg.boot.model.Course;
 import com.cg.boot.service.ICourseService;
 
+/**
+ * 
+ * @author Madhuri
+ *
+ */
 @RestController
 @RequestMapping("/api")
 public class ChooseCourseController {
 	@Autowired
 	ICourseService courseService;
-	Logger logger=LoggerFactory.getLogger(ChooseCourseController.class);
-	
+	Logger logger = LoggerFactory.getLogger(ChooseCourseController.class);
+
+	/**
+	 * This method represents which course is selected by student using their id. If
+	 * course Id is not present in the database it returns course details are not
+	 * found.
+	 * 
+	 * @param courseId  : {@link Integer}
+	 * @param studentId : {@link Integer}
+	 * @return {@link ResponseEntity} : Course {@link Course}, {@link HttpStatus}
+	 * @author Madhuri
+	 */
+
 	@GetMapping("/chooseCourse/{courseId}/{studentId}")
 	public ResponseEntity<ChooseCourse> chooseCourse(@PathVariable("courseId") int courseId,
 			@PathVariable("studentId") int studentId) {
@@ -37,12 +54,21 @@ public class ChooseCourseController {
 
 	}
 
+	/**
+	 * This method return course list which are choosen by student.
+	 * 
+	 * @param studentId : {@link Integer}
+	 * @return {@link ResponseEntity} : ChooseCourse {@link List},
+	 *         {@link HttpStatus}
+	 * @author Madhuri
+	 */
+
 	@GetMapping("/getChoosedCoursesByStudentId/{studentId}")
 	public ResponseEntity<List<ChooseCourse>> getChoosedCoursesByStudentId(@PathVariable("studentId") int studentId) {
 		List<ChooseCourse> chooseCourses = courseService.getChoosedCoursesByStudentId(studentId);
-		logger.info("Course Details return Successfully by Student ID "+studentId);
-		return new ResponseEntity<List<ChooseCourse>>(chooseCourses,HttpStatus.OK);
-		
+		logger.info("Course Details return Successfully by Student ID " + studentId);
+		return new ResponseEntity<List<ChooseCourse>>(chooseCourses, HttpStatus.OK);
+
 	}
 
 }
