@@ -167,8 +167,6 @@ public class CourseService implements ICourseService {
 		}
 		return chooseCourses;
 	}
-
-<<<<<<< HEAD
 	/**
 	 * This method finds courses by passed student Id. Returns list of courses
 	 * based on student Id. Check whether list of courses is empty or not.
@@ -185,12 +183,6 @@ public class CourseService implements ICourseService {
 		}
 		return list;
 	}
-=======
-	
-    
-	
 
-	
->>>>>>> a53a48ff5879f12c3aeff6f5ac5dfd477e27812c
 
 }
