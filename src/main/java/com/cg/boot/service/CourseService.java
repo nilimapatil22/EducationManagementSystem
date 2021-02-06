@@ -118,7 +118,7 @@ public class CourseService implements ICourseService {
 	 * @param courseName :{@link String}
 	 * @return flag : {@link Boolean}
 	 */
-
+ 
 	public boolean validateCourse(String courseName) {
 		Course course = repository.findByCourseName(courseName);
 		if (course == null) {
@@ -167,6 +167,8 @@ public class CourseService implements ICourseService {
 		}
 		return chooseCourses;
 	}
+
+	
     
 	
 
