@@ -12,7 +12,7 @@ import com.cg.boot.model.User;
 import com.cg.boot.service.ILoginService;
 
 /**
- * @author prajakta
+ * @author Prajakta
  *
  */
 @RestController

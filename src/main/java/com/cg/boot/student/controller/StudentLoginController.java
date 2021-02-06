@@ -19,6 +19,14 @@ public class StudentLoginController {
 	ILoginService loginService;
 	Logger logger=LoggerFactory.getLogger(StudentLoginController.class);
 	
+	/**
+	 * This method accepts student id and password based on passed object and 
+	 * Return message as "Login Successful".
+	 * @param studentId
+	 * @param password
+	 * @return "Login Successful" {@link String}
+	 */
+	
 	@GetMapping("/getStudent/{id}/{password}")
 	public String getUser(@PathVariable("id") int studentId,@PathVariable("password") String password){
 		@SuppressWarnings("unused")

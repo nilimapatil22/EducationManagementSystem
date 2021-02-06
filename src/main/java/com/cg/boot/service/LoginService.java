@@ -12,6 +12,10 @@ import com.cg.boot.exceptions.DataNotFoundException;
 import com.cg.boot.model.User;
 import com.cg.boot.repository.UserRepository;
 
+/**
+ * @author Prajakta
+ *
+ */
 @Service
 @Transactional
 public class LoginService implements ILoginService {
@@ -31,7 +35,7 @@ public class LoginService implements ILoginService {
 			throw new DataNotFoundException("Invalid Id");
 		}
 		if (!user.getPassword().equals(password)) {
-			logger.warn("User with  passwors " + password + " not present");
+			logger.warn("User with  password  not present");
 			throw new DataNotFoundException("Invalid Password");
 		}
 
@@ -55,7 +59,7 @@ public class LoginService implements ILoginService {
 			throw new DataNotFoundException("Invalid Id");
 		}
 		if (!user.getPassword().equals(password)) {
-			logger.warn("User with  passwors " + password + " not present");
+			logger.warn("User with  password  not present");
 			throw new DataNotFoundException("Invalid Password");
 		}
 
