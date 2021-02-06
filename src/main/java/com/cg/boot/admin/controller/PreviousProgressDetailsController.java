@@ -16,7 +16,11 @@ import com.cg.boot.exceptions.DataNotFoundException;
 import com.cg.boot.model.PreviousProgressDetails;
 import com.cg.boot.model.ProgressDetails;
 import com.cg.boot.service.IProgressDetailsService;
-
+/**
+ * 
+ * @author Prajkta
+ *
+ */
 @RestController
 @RequestMapping("/api")
 public class PreviousProgressDetailsController {
