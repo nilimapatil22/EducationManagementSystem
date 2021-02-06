@@ -15,6 +15,10 @@ import com.cg.boot.exceptions.DataNotFoundException;
 import com.cg.boot.model.ProgressDetails;
 import com.cg.boot.service.IProgressDetailsService;
 
+/**
+ * @author Nilima
+ *
+ */
 @RestController
 @RequestMapping("/api")
 public class StudentProgressDetailsController {
@@ -22,9 +26,15 @@ public class StudentProgressDetailsController {
 	@Autowired
 	IProgressDetailsService service;
 	Logger logger=LoggerFactory.getLogger(StudentProgressDetailsController.class);
-/*
- * Get All ProgressDetails By Grade
- */
+	
+	/**
+	 * This method accepts grade which user has inserted. Return response entity
+	 * containing list of progress details .
+	 * 
+	 * @param grade
+	 * @return {@link ResponseEntity} grades {@link List} {@link HttpStatus}
+	 * @throws DataNotFoundException
+	 */
 	@GetMapping("/getStudentProgressDetails/{grade}")
 	public ResponseEntity<List<ProgressDetails>> getGrade(@PathVariable String grade){
 		// List<Grade>list=null;
@@ -36,9 +46,15 @@ public class StudentProgressDetailsController {
 		logger.info("Progress Details Return successfully with Grade "+grade);
 		return new ResponseEntity<List<ProgressDetails>>(grades, HttpStatus.OK);
 	}
-/*
- * Get ProgressDetails By Id
- */
+	
+	/**
+	 * This method accepts grade Id. Return response entity containing progress
+	 * details based on grade Id.
+	 * 
+	 * @param gradeId {@link Integer}
+	 * @return
+	 * @throws DataNotFoundException
+	 */
 	@GetMapping("/getStudentProgressDetailsById/{gradeId}")
 	public ResponseEntity<ProgressDetails> getProgressDetails(@PathVariable("gradeId") int gradeId){
 		ProgressDetails grade = service.getProgressDetails(gradeId);
