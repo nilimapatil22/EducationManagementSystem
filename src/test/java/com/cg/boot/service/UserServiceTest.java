@@ -7,6 +7,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -28,6 +30,7 @@ class UserServiceTest {
 	
 	UserService listMock= mock(UserService.class,"myMock");
 	
+		
 	@Test
 	public void getAllUsersTest() {
 		when(repository.findAll()).thenReturn( Stream.of(new User(2, "Kiran", "Sony", "kiran@gmail.com", "Kiran@123",
@@ -95,4 +98,17 @@ class UserServiceTest {
 		verify(listMock).validateStudentId(8);
 		assertThat(studentFlag);
 	}
+	
+	@Test
+	public void getUserTest() {
+		int userId=2;
+		List<User> userList=Stream.of(new User(2, "Kiran", "Sony", "kiran@gmail.com", "Kiran@123",	
+				9890851226l,"Jammu", "student"),new User(23,"Samita","Gawande","samita@gmail.com", 
+						"Samita@123",7709920871l,"Nagpur","student")).collect(Collectors.toList());
+		repository.saveAll(userList);
+		when(repository.findById(userId)).thenReturn(Optional.of(userList.get(1)));
+		assertEquals(userList.get(1),service.getUser(userId));
+	}
+	
+
 }
