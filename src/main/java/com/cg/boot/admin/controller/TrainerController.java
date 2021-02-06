@@ -3,6 +3,7 @@ package com.cg.boot.admin.controller;
 import java.util.List;
 
 
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -33,7 +34,7 @@ import com.cg.boot.service.ITrainerService;
 @RequestMapping("/api")
 public class TrainerController {
 	@Autowired
-	ITrainerService service;
+	ITrainerService trainerService;
 	Logger logger=LoggerFactory.getLogger(TrainerController.class);
 	
 	/**
@@ -46,7 +47,7 @@ public class TrainerController {
 
 	@PostMapping("/addTrainer")
 	public Trainer addTrainer(@Valid @RequestBody Trainer trainer) {
-		Trainer addTrainer = service.addTrainer(trainer);
+		Trainer addTrainer = trainerService.addTrainer(trainer);
 		logger.info("Trainer Added Successfully");
 		return addTrainer;
 	}
@@ -61,7 +62,7 @@ public class TrainerController {
 	@GetMapping("/getTrainer/{id}")
 	public ResponseEntity<Trainer> getTrainer(@PathVariable("id") int id) {
 
-		Trainer getTrainer = service.getTrainer(id);
+		Trainer getTrainer = trainerService.getTrainer(id);
 		if (getTrainer == null) {
 			logger.warn("Trainer deatils not found with Id "+id);
 			throw new DataNotFoundException("No Trainer present with the given id: " + id);
@@ -78,9 +79,23 @@ public class TrainerController {
 
 	@GetMapping("/getAllTrainers")
 	public ResponseEntity<List<Trainer>> getTrainers() throws Exception {
-		List<Trainer> getTrainers = service.getAllTrainers();
+		List<Trainer> getTrainers = trainerService.getAllTrainers();
 		logger.info("All Trainer Details  Successfully ");
 		return new ResponseEntity<List<Trainer>>(getTrainers, HttpStatus.OK);
+	}
+	
+	/**
+	 * This method accepts student Id which user has inserted. Return response
+	 * entity containing list of trainer details based on student Id.
+	 * 
+	 * @param studentId : {@link Integer}
+	 * @return {@link ResponseEntity}: messageList {@link List}, {@link HttpStatus}
+	 */
+	@GetMapping("/getTrainersByStudentId/{studentId}")
+	public ResponseEntity<List<Trainer>> getTrainerByStudentId(@PathVariable("studentId") int studentId) {
+		List<Trainer> trainerList = trainerService.getTrainerByStudentId(studentId);
+		logger.info("Trainer Details Found with Student ID "+studentId);
+		return new ResponseEntity<List<Trainer>>(trainerList, HttpStatus.OK);
 	}
     
 	/**
@@ -94,7 +109,7 @@ public class TrainerController {
 
 	@PutMapping("/updateTrainer")
 	public ResponseEntity<Trainer> updateTrainer(@Valid @RequestBody Trainer trainer) {
-		Trainer updateTrainer = service.updateTrainer(trainer);
+		Trainer updateTrainer = trainerService.updateTrainer(trainer);
 		logger.info("All Trainer Details Updated Successfully ");
 		return new ResponseEntity<Trainer>(updateTrainer, HttpStatus.OK);
 	}
@@ -112,7 +127,7 @@ public class TrainerController {
 	@DeleteMapping("/deleteTrainer/{trainerId}/{userId}")
 	public ResponseEntity<List<Trainer>> deleteTrainer(@PathVariable("trainerId") int trainerId,
 			@PathVariable("userId") int userId) {
-		List<Trainer> trainer = service.deleteTrainer(trainerId,userId);
+		List<Trainer> trainer = trainerService.deleteTrainer(trainerId,userId);
 		if (trainer == null) {
 			logger.warn("Trainer Details not found by trainer ID "+trainerId+" to delete");
 			throw new DataNotFoundException("No Trainer present with the given id: " + trainerId);

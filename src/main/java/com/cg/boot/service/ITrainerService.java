@@ -23,6 +23,8 @@ public interface ITrainerService {
 
 	boolean isValidTrainerPhoneNo(String phoneNo);
 
+	List<Trainer> getTrainerByStudentId(int studentId);
+
 
 
 }
