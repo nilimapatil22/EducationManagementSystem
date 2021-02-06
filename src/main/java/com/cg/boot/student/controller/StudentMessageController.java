@@ -18,7 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cg.boot.exceptions.DataNotFoundException;
 import com.cg.boot.model.Message;
 import com.cg.boot.service.IMessageService;
-
+/**
+ * 
+ * @author Priyanka
+ *
+ */
 @RestController
 @RequestMapping("/api")
 public class StudentMessageController {

@@ -34,6 +34,10 @@ public class UserController {
 	IUserService userService;
 	Logger logger=LoggerFactory.getLogger(UserController.class);
 	
+
+	/*
+	 * delete User based on user Id
+=======
 	/**
 	 * This method accepts and saves User details through object. 
 	 * Return an object of user containing all
@@ -41,6 +45,7 @@ public class UserController {
 	 * 
 	 * @param : userDetails {@link User}
 	 * @return : User {@link User}
+>>>>>>> 7b29c73f313065195e06fbdbd0358357b62f1d5e
 	 */
 
 	@PostMapping("/add")
@@ -62,7 +67,10 @@ public class UserController {
 	public ResponseEntity<User> getUser(@PathVariable("id") int id) {
 		User user = userService.getUser(id);
 		if (user == null) {
+			logger.warn("User not found with ID "+id);
+
 			logger.warn("user not found");
+
 			throw new DataNotFoundException("No user present with given id: " + id);
 		}
 		logger.info("Admin Details found Successfully with ID "+id);
