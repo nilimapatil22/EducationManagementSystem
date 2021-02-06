@@ -29,7 +29,7 @@ public class UserController {
 	IUserService userService;
 	Logger logger=LoggerFactory.getLogger(UserController.class);
 	/*
-	 * Add User
+	 * delete User
 	 */
 
 	@PostMapping("/add")
