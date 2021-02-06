@@ -16,12 +16,22 @@ import com.cg.boot.exceptions.DataNotFoundException;
 import com.cg.boot.model.Course;
 import com.cg.boot.service.ICourseService;
 
+/**
+ * @author nilima
+ *
+ */
 @RestController
 @RequestMapping
 public class StudentCourseController {
 	@Autowired
 	ICourseService service;
 	Logger logger=LoggerFactory.getLogger(StudentCourseController.class);
+	/**
+	 * This method accepts course id through URl and return the course details of that 
+	 * particular course Id.and return an object of course containing all arguments which has been saved.
+	 * @param id {@link Integer}
+	 * @return "Course" {@link Course}
+	 */
 	
 	@GetMapping("/getStudentCourse/{id}")
 	public ResponseEntity<Course> getCourse(@PathVariable("id") int id){
@@ -34,7 +44,11 @@ public class StudentCourseController {
 		logger.warn("Student course Details found successfully with ID "+id);
 		return new ResponseEntity<Course>(getCourse, HttpStatus.OK);
 	}
-	
+	/**
+	 * This method returns list of all courses.
+	 * @param course : {@link Course}
+	 * @return {@link ResponseEntity}: course {@link Course}, {@link HttpStatus}
+	 */
 	@GetMapping("/getAllStudentCourses")
 	public ResponseEntity<List<Course>> getCourses() throws Exception {
 		List<Course> getCourses = service.getAllCourses();
