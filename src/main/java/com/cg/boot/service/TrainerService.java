@@ -36,7 +36,7 @@ public class TrainerService implements ITrainerService {
 	/**
 	 * This method accepts and saves trainer details which user has inserted through
 	 * object. Return an object of trainer containing all arguments which has been
-	 * saved. Validate the user is admin.
+	 * saved. Validate user is admin.
 	 * 
 	 * @param trainer : {@link Trainer}
 	 * @return Trainer : {@link Trainer}
