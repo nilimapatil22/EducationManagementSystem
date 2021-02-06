@@ -16,28 +16,45 @@ import com.cg.boot.model.PreviousProgressDetails;
 import com.cg.boot.model.ProgressDetails;
 import com.cg.boot.service.IProgressDetailsService;
 
+/**
+ * @author Nilima
+ *
+ */
 @RestController
 @RequestMapping("/api")
 public class StudentPreviousProgressDetailsController {
 	@Autowired
 	IProgressDetailsService service;
-	Logger logger=LoggerFactory.getLogger(StudentPreviousProgressDetailsController.class);
-/*
- * Get ProgressDetails By Student Id
- */
+	Logger logger = LoggerFactory.getLogger(StudentPreviousProgressDetailsController.class);
+
+	/**
+	 * This method accepts progress details based on passed object and return
+	 * Response Entity containing list of previous progress details.
+	 * 
+	 * @param studentId
+	 * @return {@link ResponseEntity} list {@link List}{@link HttpStatus}
+	 * @throws DataNotFoundException
+	 */
+	
 	@GetMapping("/getStudentPreviousProgressDetailsById/{studentId}")
-	public ResponseEntity<List<PreviousProgressDetails>> getProgressDetails(@PathVariable("studentId") int studentId) throws DataNotFoundException {
+	public ResponseEntity<List<PreviousProgressDetails>> getProgressDetails(@PathVariable("studentId") int studentId)
+			throws DataNotFoundException {
 		List<PreviousProgressDetails> list = service.getAllProgressDetailsByStudentId(studentId);
 		if (list == null) {
-			logger.warn("student previous progress Details not found By student ID "+studentId);
+			logger.warn("student previous progress Details not found By student ID " + studentId);
 			throw new DataNotFoundException("Student Grade Not Found By these ID");
 		}
-		logger.info("student previous progress Details return successfully By student ID "+studentId);
-		return new ResponseEntity<List<PreviousProgressDetails>>(list,HttpStatus.OK);
+		logger.info("student previous progress Details return successfully By student ID " + studentId);
+		return new ResponseEntity<List<PreviousProgressDetails>>(list, HttpStatus.OK);
 	}
-/*
- * Get All ProgressDetails
- */
+
+	/**
+	 * This method return list of all previous progress details
+	 * 
+	 * @return {@link ResponseEntity}grades {@link List} {@link HttpStatus}
+	 * @throws DataNotFoundException
+	 */
+	
 	@GetMapping("/getStudentAllPreviousProgressDetails")
 	public ResponseEntity<List<ProgressDetails>> getGrades() throws DataNotFoundException {
 		List<ProgressDetails> grades = service.getAllProgressDetails();

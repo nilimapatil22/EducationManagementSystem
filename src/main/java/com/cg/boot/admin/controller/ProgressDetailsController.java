@@ -2,6 +2,7 @@ package com.cg.boot.admin.controller;
 
 import java.util.List;
 
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -22,6 +23,12 @@ import com.cg.boot.exceptions.DataNotFoundException;
 import com.cg.boot.model.ProgressDetails;
 import com.cg.boot.service.IProgressDetailsService;
 
+
+
+/**
+ * @author Nilima  
+ *
+ */
 @RestController
 @RequestMapping("/api")
 public class ProgressDetailsController {
@@ -29,9 +36,15 @@ public class ProgressDetailsController {
 	@Autowired
 	IProgressDetailsService service;
 	Logger logger=LoggerFactory.getLogger(ProgressDetailsController.class);
-	/*
-	 * Get All ProgressDetails By Grade
+	/**
+	 * This method accepts grade which user has inserted. Return response entity
+	 * containing list of progress details .
+	 * 
+	 * @param grade
+	 * @return {@link ResponseEntity} grades {@link List} {@link HttpStatus}
+	 * @throws DataNotFoundException
 	 */
+	
 	@GetMapping("/getProgressDetails/{grade}")
 	public ResponseEntity<List<ProgressDetails>> getGrade(@PathVariable String grade) throws DataNotFoundException {
 		// List<Grade>list=null;
@@ -44,8 +57,13 @@ public class ProgressDetailsController {
 		return new ResponseEntity<List<ProgressDetails>>(grades, HttpStatus.OK);
 	}
 
-	/*
-	 * Get ProgressDetails By Id
+	/**
+	 * This method accepts grade Id. Return response entity containing progress
+	 * details based on grade Id.
+	 * 
+	 * @param gradeId {@link Integer}
+	 * @return
+	 * @throws DataNotFoundException
 	 */
 	@GetMapping("/getProgressDetailsById/{gradeId}")
 	public ResponseEntity<ProgressDetails> getProgressDetails(@PathVariable("gradeId") int gradeId)
@@ -59,8 +77,11 @@ public class ProgressDetailsController {
 		return new ResponseEntity<ProgressDetails>(grade, HttpStatus.OK);
 	}
 
-	/*
-	 * Get All ProgressDetails
+	/**
+	 * This method returns list of all progress details
+	 * 
+	 * @return {@link ResponseEntity } gradeList {@link List} {@link HttpStatus}
+	 * @throws DataNotFoundException
 	 */
 	@GetMapping("/getAllProgressDetails")
 	public ResponseEntity<List<ProgressDetails>> getGrades() throws DataNotFoundException {
@@ -73,8 +94,12 @@ public class ProgressDetailsController {
 		return new ResponseEntity<List<ProgressDetails>>(grades, HttpStatus.OK);
 	}
 
-	/*
-	 * Add ProgressDetails
+	/**
+	 * This method accepts progress details based on passed object and add progress
+	 * details. Returns Response entity containing grade id.
+	 * 
+	 * @param progressDetails {@link ProgressDetails}
+	 * @return {@link ResponseEntity} gradeId {@link HttpStatus}
 	 */
 	@PostMapping("/addProgressDetails")
 	public ResponseEntity<Integer> addProgressDetails(@Valid @RequestBody ProgressDetails progressDetails) {
@@ -83,8 +108,13 @@ public class ProgressDetailsController {
 		return new ResponseEntity<Integer>(gradeInfo.getGradeId(), HttpStatus.OK);
 	}
 
-	/*
-	 * Update ProgressDetails
+	/**
+	 * This method accepts progress details based on passed object and update
+	 * progress details. Return Response Entity containing progress details
+	 * 
+	 * @param progressDetails {@link ProgressDetails}
+	 * @return {@link ResponseEntity} gradeInfo{@link HttpStatus}
+	 * @throws DataNotFoundException
 	 */
 	@PutMapping("/updateGrade")
 	public ResponseEntity<ProgressDetails> updateProgressDetails(@RequestBody ProgressDetails progressDetails)
@@ -98,8 +128,14 @@ public class ProgressDetailsController {
 		return new ResponseEntity<ProgressDetails>(gradeInfo, HttpStatus.OK);
 	}
 
-	/*
-	 * Delete ProgressDetails
+	/**
+	 * This method accepts progress details based on passed object and delete
+	 * progress details of user id Return Response Entity containing list of
+	 * progress details except deleted one.
+	 * 
+	 * @param progressId
+	 * @param userId
+	 * @return {@link ResponseEntity} grades {@link List} {@link HttpStatus}
 	 */
 	@DeleteMapping("/deleteProgressDetails/{progressId}/{userId}")
 	public ResponseEntity<List<ProgressDetails>> deleteProgressDetails(@PathVariable("progressId") int progressId,

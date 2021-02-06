@@ -12,7 +12,7 @@ import com.cg.boot.model.User;
 import com.cg.boot.service.ILoginService;
 
 /**
- * @author prajakta
+ * @author Prajakta
  *
  */
 @RestController
@@ -21,7 +21,13 @@ public class LoginController {
 	@Autowired
 	ILoginService loginService;
 	Logger logger=LoggerFactory.getLogger(LoginController.class);
-	
+	/**
+	 * This method accepts admin id and password  based on passed object and 
+	 * It will return the message as "Login Successful"
+	 * @param adminId
+	 * @param password
+	 * @return Login Successful {@link String}
+	 */
 	@GetMapping("/getUser/{id}/{password}")
 	public String getUser(@PathVariable("id") int adminId,@PathVariable("password") String password){
 		@SuppressWarnings("unused")

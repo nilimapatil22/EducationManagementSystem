@@ -2,6 +2,7 @@ package com.cg.boot.student.controller;
 
 import java.util.List;
 
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -22,14 +23,24 @@ import com.cg.boot.exceptions.DataNotFoundException;
 import com.cg.boot.model.User;
 import com.cg.boot.service.IUserService;
 
+
+/**
+ * @author Prajakta
+ *
+ */
 @RestController
 @RequestMapping("/api")
 public class StudentUserController {
 	@Autowired
 	IUserService userService;
-	Logger logger=LoggerFactory.getLogger(StudentUserController.class);
-	/*
-	 * Add User
+	Logger logger = LoggerFactory.getLogger(StudentUserController.class);
+
+	/**
+	 * This method accepts and saves User details through object. Return an object
+	 * of user containing all arguments which has been saved.
+	 * 
+	 * @param : userDetails {@link User}
+	 * @return : User {@link User}
 	 */
 
 	@PostMapping("/addStudent")
@@ -39,8 +50,12 @@ public class StudentUserController {
 		return userInfo;
 	}
 
-	/*
-	 * Get user based on id
+	/**
+	 * This method accepts user id which user has inserted. Return response entity
+	 * containing user based on id
+	 * 
+	 * @param id {@link User}
+	 * @return {@link ResponseEntity}: user {@link User} {@link HttpStatus}
 	 */
 
 	@GetMapping("/getStudent/{id}")
@@ -50,12 +65,15 @@ public class StudentUserController {
 			logger.warn("No user present with given id: " + id);
 			throw new DataNotFoundException("No user present with given id: " + id);
 		}
-		logger.info("Student Details Return successfully with ID "+id);
+		logger.info("Student Details Return successfully with ID " + id);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 
 	}
-	/*
-	 * Get all user
+
+	/**
+	 * This method will accepts and return list of all users
+	 * 
+	 * @return {@link ResponseEntity}: userList{@link List} {@link HttpStatus}
 	 */
 
 	@GetMapping("/getAllStudent")
@@ -65,8 +83,13 @@ public class StudentUserController {
 		return new ResponseEntity<List<User>>(userList, HttpStatus.OK);
 	}
 
-	/*
-	 * Update User Details
+	/**
+	 * This method accepts and update user information which user has inserted
+	 * through object. Return response entity containing details of user which has
+	 * been updated.
+	 * 
+	 * @param user {@link User}
+	 * @return {@link ResponseEntity} userInfo {@link HttpStatus}
 	 */
 
 	@PutMapping("/updateStudent")
@@ -80,8 +103,13 @@ public class StudentUserController {
 		return new ResponseEntity<User>(userInfo, HttpStatus.OK);
 	}
 
-	/*
-	 * Delete User
+	/**
+	 * This method accepts user Id to delete user details based on user Id It will
+	 * check userId, if it is null then it will throw exception. Return list of
+	 * remaining schedules except deleted one.
+	 * 
+	 * @param userId :{@link Integer}
+	 * @return {@link ResponseEntity} user {@link List} {@link HttpStatus}
 	 */
 
 	@DeleteMapping("/deleteStudent/{id}")
@@ -91,7 +119,7 @@ public class StudentUserController {
 			logger.info("No user present to delete with given id: " + id);
 			throw new DataNotFoundException("No user present to delete with given id: " + id);
 		}
-		logger.info("Delete student Details successfully with ID "+id);
+		logger.info("Delete student Details successfully with ID " + id);
 		return "user id deleted successfully";
 	}
 
