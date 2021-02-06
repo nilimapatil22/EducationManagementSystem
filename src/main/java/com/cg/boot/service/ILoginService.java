@@ -4,6 +4,9 @@ import com.cg.boot.model.User;
 
 public interface ILoginService {
 
-	public User getUser(int id, String password);
+	
+	public User getStudentLogin(int studentId, String password);
+
+	public User getAdminLogin(int adminId, String password);
 
 }
