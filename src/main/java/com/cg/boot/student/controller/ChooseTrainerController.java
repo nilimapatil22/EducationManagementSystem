@@ -12,8 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.boot.exceptions.DataNotFoundException;
 import com.cg.boot.model.ChooseTrainer;
+import com.cg.boot.model.Trainer;
 import com.cg.boot.service.ITrainerService;
-
+/**
+ * 
+ * @author Madhuri
+ *
+ */
 @RestController
 @RequestMapping("/api")
 public class ChooseTrainerController {
@@ -22,8 +27,16 @@ public class ChooseTrainerController {
 	ITrainerService service;
 	Logger logger=LoggerFactory.getLogger(ChooseTrainerController.class);
 	
+	/**
+	 * The given method returns the trainer list which are choose by student.
+	 * If given trainer id is not present then returns trainer not found.
+	 * @param trainerId : {@link Integer}
+	 * @param studentId : {@link Integer}
+	 * @return {@link ResponseEntity} : {@link Trainer}, {@link HttpStatus}
+	 * @author Madhuri
+	 */
 	@GetMapping("/getChoosedTrainer/{trainerId}/{studentId}")
-	public ResponseEntity<ChooseTrainer> getProgressDetails(@PathVariable("trainerId") int trainerId,@PathVariable("studentId") int studentId) {
+	public ResponseEntity<ChooseTrainer> getTrainerDetails(@PathVariable("trainerId") int trainerId,@PathVariable("studentId") int studentId) {
 		ChooseTrainer trainer = service.getTrainerDetails(trainerId,studentId);
 		if (trainer == null) {
 			logger.error("Course Trainer not Choosen");
