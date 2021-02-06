@@ -12,10 +12,7 @@ import com.cg.boot.exceptions.DataNotFoundException;
 import com.cg.boot.model.User;
 import com.cg.boot.repository.UserRepository;
 
-/**
- * @author Prajakta
- *
- */
+
 @Service
 @Transactional
 public class LoginService implements ILoginService {
