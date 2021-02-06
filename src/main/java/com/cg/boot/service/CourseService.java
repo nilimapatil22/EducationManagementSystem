@@ -168,7 +168,7 @@ public class CourseService implements ICourseService {
 		return chooseCourses;
 	}
 
-<<<<<<< HEAD
+
 	/**
 	 * This method finds courses by passed student Id. Returns list of courses
 	 * based on student Id. Check whether list of courses is empty or not.
@@ -176,21 +176,15 @@ public class CourseService implements ICourseService {
 	 * @param studentId : {@link Integer}
 	 * @return {@link List}
 	 */
-	@Override
-	public List<Course> getCoursesByStudentId(int studentId) {
-		List<Course> list = repository.findAllByStudentId(studentId);
-		if (list.isEmpty()) {
-			logger.warn("No Courses are present with given student id: " + studentId);
-			throw new DataNotFoundException("No Courses are present with given student id: " + studentId);
-		}
-		return list;
-	}
-=======
 	
-    
-	
-
-	
->>>>>>> a53a48ff5879f12c3aeff6f5ac5dfd477e27812c
+	/*
+	 * @Override public List<Course> getCoursesByStudentId(int studentId) {
+	 * List<Course> list = repository.findAllByStudentId(studentId); if
+	 * (list.isEmpty()) {
+	 * logger.warn("No Courses are present with given student id: " + studentId);
+	 * throw new
+	 * DataNotFoundException("No Courses are present with given student id: " +
+	 * studentId); } return list; }
+	 */
 
 }
