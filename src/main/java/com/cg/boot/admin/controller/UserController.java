@@ -28,6 +28,7 @@ public class UserController {
 	@Autowired
 	IUserService userService;
 	Logger logger=LoggerFactory.getLogger(UserController.class);
+	
 	/*
 	 * delete User based on user Id
 	 */
@@ -47,7 +48,7 @@ public class UserController {
 	public ResponseEntity<User> getUser(@PathVariable("id") int id) {
 		User user = userService.getUser(id);
 		if (user == null) {
-			logger.warn("Course not found with ID "+id);
+			logger.warn("User not found with ID "+id);
 			throw new DataNotFoundException("No user present with given id: " + id);
 		}
 		logger.info("Admin Details found Successfully with ID "+id);
