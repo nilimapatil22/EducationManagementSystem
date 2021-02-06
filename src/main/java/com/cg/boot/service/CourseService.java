@@ -174,7 +174,7 @@ public class CourseService implements ICourseService {
 	 * @param studentId : {@link Integer}
 	 * @return {@link List}
 	 */
-	@Override
+	/*@Override
 	public List<Course> getCoursesByStudentId(int studentId) {
 		List<Course> list = repository.findAllByStudentId(studentId);
 		if (list.isEmpty()) {
@@ -182,7 +182,7 @@ public class CourseService implements ICourseService {
 			throw new DataNotFoundException("No Courses are present with given student id: " + studentId);
 		}
 		return list;
-	}
+	}*/
 
 
 }
