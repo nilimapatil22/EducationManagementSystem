@@ -23,8 +23,15 @@ public class PreviousProgressDetailsController {
 	@Autowired
 	IProgressDetailsService service;
 	Logger logger=LoggerFactory.getLogger(PreviousProgressDetailsController.class);
-/*
- * Get ProgressDetails By Id
+	
+	
+/**
+ * This method accepts progress details based on passed object and return Response Entity containing list of
+ * all previous progress details based on student id.
+ * 
+ * @param studentId {@link Integer}
+ * @return list {@link List}
+ * @throws DataNotFoundException
  */
 	@GetMapping("/getPreviousProgressDetailsById/{studentId}")
 	public ResponseEntity<List<PreviousProgressDetails>> getProgressDetails(@PathVariable("studentId") int studentId) throws DataNotFoundException {
@@ -36,9 +43,14 @@ public class PreviousProgressDetailsController {
 		logger.info("Previous Progress Details return Successfully with student ID "+studentId);
 		return new ResponseEntity<List<PreviousProgressDetails>>(list,HttpStatus.OK);
 	}
-/*
- * Get All ProgressDetails
- */
+
+	/**
+	 * This method accepts previous progress details and return 
+	 * Response entity containing list of all previous progress details
+	 * 
+	 * @return  {@link List}
+	 * @throws DataNotFoundException
+	 */
 	@GetMapping("/getAllPreviousProgressDetails")
 	public ResponseEntity<List<ProgressDetails>> getGrades() throws DataNotFoundException {
 		List<ProgressDetails> grades = service.getAllProgressDetails();

@@ -16,6 +16,10 @@ import com.cg.boot.model.ProgressDetails;
 import com.cg.boot.repository.PreviousProgressDetailsRepository;
 import com.cg.boot.repository.ProgressDetailsRepository;
 
+/**
+ * @author Nilima
+ *
+ */
 @Service
 @Transactional
 public class ProgressDetailsService implements IProgressDetailsService {
@@ -27,25 +31,40 @@ public class ProgressDetailsService implements IProgressDetailsService {
 	PreviousProgressDetails previousDetails;
 	@Autowired
 	UserService userService;
-	/*
-	 * Get all ProgressDetails By Grade
+	
+	/**
+	 * This method finds all progress details by grade and return list of progress details
+	 * 
+	 * @param grade{@link String}
+	 * @return {@link List}
 	 */
 
 	@Override
 	public List<ProgressDetails> getAllProgressDetails(String grade) {
 		return repository.findAllByGrade(grade);
 	}
-/*
- * 
- */
+
+	/**
+	 * This method check that the id is student id or not if it is student id then
+	 * it finds all  previous progress details by student id and return list of previous
+	 * progress details
+	 * 
+	 * @param studentId {@link Integer}
+	 * @return {@link List}
+	 */
+
 	@Override
 	public List<PreviousProgressDetails> getAllProgressDetailsByStudentId(int studentId) {
 		userService.validateStudentId(studentId);
 		return previousRepository.findAllByStudentId(studentId);
 	}
 
-	/*
-	 * Add ProgressDetails
+	/**
+	 * This method saves progress in progress details and previous progress details database
+	 * Check input validation and return saved progress details.
+	 * 
+	 * @param progressDetails {@link  ProgressDetails }
+	 * @return progressDetails {@link ProgressDetails}
 	 */
 	@Override
 	public ProgressDetails addProgressDetails(@Valid ProgressDetails progressDetails) {
@@ -56,8 +75,12 @@ public class ProgressDetailsService implements IProgressDetailsService {
 		return repository.save(progressDetails);
 	}
 
-	/*
-	 * Update ProgressDetails
+	/**
+	 * This method update progress details. Check input validation and return updated 
+	 * progress details.
+	 * 
+	 * @param progressDetails {@link ProgressDetails}
+	 * @return ProgressDetails {@link ProgressDetails}
 	 */
 	@Override
 	public ProgressDetails updateProgressDetails(ProgressDetails progressDetails) {
@@ -71,17 +94,28 @@ public class ProgressDetailsService implements IProgressDetailsService {
 		return repository.save(progressDetails);
 	}
 
-	/*
-	 * Delete ProgressDetails
-	 */
+
+	/**
+	 * This method first check it is admin id or not. If it is admin id then it delete progress details
+	 *  based on progress id and return list of progress details except deleted one.
+	 *  
+	 *  @param progressId {@link Integer}
+	 *  @param userId {@link Integer}
+	 *  @return list {@link List}
+	 */  
 	@Override
 	public List<ProgressDetails> deleteProgressDetails(int progressId,int userId) {
 		userService.validateAdminId(userId);
 		repository.deleteById(progressId);
 		return repository.findAll();
 	}
-	/*
-	 * get ProgressDetails By Id
+	
+	/**
+	 * This method accepts grade id and find  the progress detail based on grade id.
+	 * Return progress details based on grade id otherwise return null.
+	 * 
+	 * @param gradeId {@link Integer}
+	 * @return progress details {@link ProgressDetails}
 	 */
 
 	@Override
@@ -89,14 +123,23 @@ public class ProgressDetailsService implements IProgressDetailsService {
 		return repository.findById(gradeId).orElse(null);
 	}
 
-	/*
-	 * Get All ProgressDetails
+	/**
+	 * This method returns list of all progress details
+	 * 
+	 * @return list {@link List}
 	 */
 	@Override
 	public List<ProgressDetails> getAllProgressDetails() {
 		return repository.findAll();
 	}
 	
+	/**
+	 * This method validate date, It matches with the format given in the method.If it  matched 
+	 * then it will return  flag as true otherwise flag as false.
+	 * 
+	 * @param date {@link String}
+	 * @return flag {@link Boolean}
+	 */
 	@Override
     public boolean isValidDate(String date) {
 		boolean flag = false;

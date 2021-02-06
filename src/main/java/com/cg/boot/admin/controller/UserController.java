@@ -22,14 +22,25 @@ import com.cg.boot.exceptions.DataNotFoundException;
 import com.cg.boot.model.User;
 import com.cg.boot.service.IUserService;
 
+
+/**
+ * @author Prajakta
+ *
+ */
 @RestController
 @RequestMapping("/api")
 public class UserController {
 	@Autowired
 	IUserService userService;
 	Logger logger=LoggerFactory.getLogger(UserController.class);
-	/*
-	 * delete User based on user Id
+	
+	/**
+	 * This method accepts and saves User details through object. 
+	 * Return an object of user containing all
+	 * arguments which has been saved.
+	 * 
+	 * @param : userDetails {@link User}
+	 * @return : User {@link User}
 	 */
 
 	@PostMapping("/add")
@@ -39,23 +50,29 @@ public class UserController {
 		return userInfo;
 	}
 
-	/*
-	 * Get user based on id
+	/**
+	 * This method accepts user id which user has inserted. Return response 
+	 * entity containing user based on  id
+	 * 
+	 * @param id {@link User}
+	 * @return {@link ResponseEntity}: user {@link User} {@link HttpStatus}
 	 */
 
 	@GetMapping("/getUser/{id}")
 	public ResponseEntity<User> getUser(@PathVariable("id") int id) {
 		User user = userService.getUser(id);
 		if (user == null) {
-			logger.warn("Course not found with ID "+id);
+			logger.warn("user not found");
 			throw new DataNotFoundException("No user present with given id: " + id);
 		}
 		logger.info("Admin Details found Successfully with ID "+id);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 
 	}
-	/*
-	 * Get all user
+	/**
+	 * This method will accepts and return list of all users
+	 * 
+	 * @return {@link ResponseEntity}: userList{@link List} {@link HttpStatus}
 	 */
 
 	@GetMapping("/getAllUsers")
@@ -65,8 +82,12 @@ public class UserController {
 		return new ResponseEntity<List<User>>(userList, HttpStatus.OK);
 	}
 
-	/*
-	 * Update User Details
+	/**
+	 * This method accepts and update user information which user has inserted
+	 * through object. Return response entity containing details of user
+	 *  which has been updated.
+	 * @param user {@link User}
+	 * @return {@link ResponseEntity} userInfo {@link HttpStatus}
 	 */
 
 	@PutMapping("/updateUser")
@@ -80,16 +101,21 @@ public class UserController {
 		return new ResponseEntity<User>(userInfo, HttpStatus.OK);
 	}
 
-	/*
-	 * Delete User
+	/**
+	 * This method accepts user Id to delete user details based on user Id
+	 *  It will check userId, if it is null then it will throw exception. Return
+	 * list of remaining schedules except deleted one.
+	 * 
+	 * @param userId :{@link Integer}
+	 * @return {@link ResponseEntity} user {@link List} {@link HttpStatus}
 	 */
 
 	@DeleteMapping("/delete/{id}")
-	public String deleteUser(@PathVariable("id") int id) {
-		List<User> user = userService.deleteUser(id);
+	public String deleteUser(@PathVariable("id") int userId) {
+		List<User> user = userService.deleteUser(userId);
 		if (user == null) {
-			logger.info("Admin found to delete with ID "+id);
-			throw new DataNotFoundException("No user present to delete with given id: " + id);
+			logger.info("Admin found to delete with ID "+userId);
+			throw new DataNotFoundException("No user present to delete with given id: " + userId);
 		}
 		logger.info("Admin id deleted successfully");
 		return "user id deleted successfully";

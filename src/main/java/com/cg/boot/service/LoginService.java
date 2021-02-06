@@ -27,7 +27,7 @@ public class LoginService implements ILoginService {
 			logger.warn("User with  id "+id+" not present");
 			throw new DataNotFoundException("User with given id  not present");
 		} else if (!user.getPassword().equals(password)) {
-			logger.warn("User with  passwors "+password+" not present");
+			logger.warn("User with given  password not present");
 			throw new DataNotFoundException("Invalid Password");
 		}
 
