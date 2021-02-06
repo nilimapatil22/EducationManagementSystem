@@ -98,7 +98,7 @@ public class CourseController {
 	 * @return {@link ResponseEntity}: messageList {@link List}, {@link HttpStatus}
 	 */
 	@GetMapping("/getCourseByStudentId")
-	public ResponseEntity<List<Course>> getcoursesByStudentId(@PathVariable("studentId") int studentId) {
+	public ResponseEntity<List<Course>> getCoursesByStudentId(@PathVariable("studentId") int studentId) {
 		List<Course> courseList = courseService.getCoursesByStudentId(studentId);
 		logger.info("Message Details Found with Student ID "+studentId);
 		return new ResponseEntity<List<Course>>(courseList, HttpStatus.OK);
