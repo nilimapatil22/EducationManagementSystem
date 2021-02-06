@@ -2,6 +2,8 @@ package com.cg.boot.admin.controller;
 
 import java.util.List;
 
+
+
 import javax.validation.Valid;
 
 
@@ -22,18 +24,43 @@ import com.cg.boot.exceptions.DataNotFoundException;
 import com.cg.boot.model.Course;
 import com.cg.boot.service.ICourseService;
 
+
+/**
+ * 
+ * @author Madhuri
+ *
+ */
+
 @RestController
 @RequestMapping
 public class CourseController {
 	@Autowired
 	ICourseService service;
 	Logger logger=LoggerFactory.getLogger(CourseController.class);
+	
+	/**
+	 * This method accepts and saves courses which user has inserted through object.
+	 * Return an object of course containing all arguments which has been saved.
+	 * 
+	 * @param course : {@link Course}
+	 * @return Course : {@link Course}
+	 */
+
 	@PostMapping("/addCourse")
 	public Course addCourse(@Valid @RequestBody Course course) {
 		Course addCourse = service.addCourse(course);
 		logger.info("Course Added Successfully");
 				return addCourse;
 	}
+	
+	/**
+	 * This method accepts course Id which user has inserted. Return response entity
+	 * containing course details based on course Id.
+	 * 
+	 * @param id : {@link Integer}
+	 * @return {@link ResponseEntity}:course {@link Course}, {@link HttpStatus}
+	 */
+
 
 	@GetMapping("/getCourse/{id}")
 	public ResponseEntity<Course> getCourse(@PathVariable("id") int id) {
@@ -46,6 +73,13 @@ public class CourseController {
 		logger.info("Course Details Found");
 		return new ResponseEntity<Course>(getCourse, HttpStatus.OK);
 	}
+	
+	/**
+	 * This method returns list of all courses.
+	 * 
+	 * @return {@link ResponseEntity}: courseList {@link List}, {@link HttpStatus}
+	 */
+
 
 	@GetMapping("/getAllCourses")
 	public ResponseEntity<List<Course>> getCourses() throws Exception {
@@ -53,6 +87,15 @@ public class CourseController {
 		logger.info("Course Details Found");
 		return new ResponseEntity<List<Course>>(getCourses, HttpStatus.OK);
 	}
+    
+	/**
+	 * This method accepts and update courses which user has inserted through
+	 * object. Return response entity containing details of course which has been
+	 * updated.
+	 * 
+	 * @param course : {@link Course}
+	 * @return {@link ResponseEntity}: course {@link Course}, {@link HttpStatus}
+	 */
 
 	@PutMapping("/updateCourse")
 	public ResponseEntity<Course> updateCourse(@Valid @RequestBody Course course) {
@@ -64,6 +107,16 @@ public class CourseController {
 		logger.info("Course Details Updated successfully");
 		return new ResponseEntity<Course>(updateCourse, HttpStatus.OK);
 	}
+    
+	/**
+	 * This method accepts course Id to delete course based on course Id. Accepts
+	 * user Id to check authorized user to perform operation. Return list of
+	 * remaining courses except deleted one
+	 * 
+	 * @param courseId : {@link Integer}
+	 * @param userId   : {@link Integer}
+	 * @return {@link ResponseEntity}: coursesList {@link List}, {@link HttpStatus}
+	 */
 
 	@DeleteMapping("/deleteCourse/{courseId}/{userId}")
 	public ResponseEntity<List<Course>> deleteCourse(@PathVariable("courseId") int courseId,
