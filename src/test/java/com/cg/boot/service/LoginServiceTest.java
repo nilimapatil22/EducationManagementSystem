@@ -23,10 +23,16 @@ class LoginServiceTest {
 	LoginService listMock=mock(LoginService.class,"myMock");
 	
 	@Test
-	public void getUserTest() {
+	public void getAdminLoginTest() {
 		User user= new User(8,"Ishar@123");
-		when(listMock.getUser(8, "Ishar@123")).thenReturn(user);
-		assertEquals(user, listMock.getUser(8, "Ishar@123"));
+		when(listMock.getAdminLogin(8, "Ishar@123")).thenReturn(user);
+		assertEquals(user, listMock.getAdminLogin(8, "Ishar@123"));
+	}
+	@Test
+	public void getStudentLoginTest() {
+		User user= new User(8,"Ishar@123");
+		when(listMock.getStudentLogin(8, "Ishar@123")).thenReturn(user);
+		assertEquals(user, listMock.getStudentLogin(8, "Ishar@123"));
 	}
 	
 	

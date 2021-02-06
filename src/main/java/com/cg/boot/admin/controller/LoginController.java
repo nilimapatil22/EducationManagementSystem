@@ -23,9 +23,9 @@ public class LoginController {
 	Logger logger=LoggerFactory.getLogger(LoginController.class);
 	
 	@GetMapping("/getUser/{id}/{password}")
-	public String getUser(@PathVariable("id") int id,@PathVariable("password") String password){
+	public String getUser(@PathVariable("id") int adminId,@PathVariable("password") String password){
 		@SuppressWarnings("unused")
-		User user = loginService.getUser(id,password);
+		User user = loginService.getAdminLogin(adminId,password);
 		logger.info("Login Successfully");
 		return "Login Successful";
 		

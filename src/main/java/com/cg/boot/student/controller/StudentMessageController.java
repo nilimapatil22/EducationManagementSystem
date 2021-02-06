@@ -24,20 +24,29 @@ import com.cg.boot.service.IMessageService;
 public class StudentMessageController {
 	@Autowired
 	IMessageService messageService;
-	Logger logger=LoggerFactory.getLogger(StudentMessageController.class);
-	/*
-	 * Add Messages
+	Logger logger = LoggerFactory.getLogger(StudentMessageController.class);
+
+	/**
+	 * This method accepts and saves message which user has inserted through object.
+	 * Return an object of message containing all arguments which has been saved.
+	 * 
+	 * @param messageDetails : {@link Message}
+	 * @return messageInfo : {@link Message}
 	 */
 	@PostMapping("/addStudentMessage")
 	public Message addMessage(@Valid @RequestBody Message messageDetails) {
 		Message messageInfo = messageService.addMessage(messageDetails);
-		logger.info("Message Added Successfully");
+		logger.info("Message added successfully");
 		return messageInfo;
 
 	}
 
-	/*
-	 * Get messages based on message id
+	/**
+	 * This method accepts message Id which user has inserted. Return response
+	 * entity containing message details based on message Id.
+	 * 
+	 * @param messageId : {@link Integer}
+	 * @return {@link ResponseEntity} : message {@link Message}, {@link HttpStatus}
 	 */
 	@GetMapping("/getStudentMessage/{messageId}")
 	public ResponseEntity<Message> getMessage(@PathVariable("messageId") int messageId) {
@@ -46,29 +55,35 @@ public class StudentMessageController {
 			logger.warn("No message present with given id: " + messageId);
 			throw new DataNotFoundException("No message present with given id: " + messageId);
 		}
-		logger.info("message return Successfully");
+		logger.info("Message return successfully");
 		return new ResponseEntity<Message>(message, HttpStatus.OK);
 
 	}
 
-	/*
-	 * Get all messages
+	/**
+	 * This method returns list of all messages.
+	 * 
+	 * @return {@link ResponseEntity}: messageList {@link List}, {@link HttpStatus}
 	 */
 	@GetMapping("/getAllStudentMessages")
 	public ResponseEntity<List<Message>> getAllMessages() {
 		List<Message> messageList = messageService.getAllMessages();
-		logger.info("All messages return Successfully");
+		logger.info("All messages return successfully");
 		return new ResponseEntity<List<Message>>(messageList, HttpStatus.OK);
 
 	}
 
-	/*
-	 * Get messages based on student id
+	/**
+	 * This method accepts student Id which user has inserted. Return response
+	 * entity containing list of message details based on student Id.
+	 * 
+	 * @param studentId : {@link Integer}
+	 * @return {@link ResponseEntity}: messageList {@link List}, {@link HttpStatus}
 	 */
 	@GetMapping("/getStudentMessagesByStudentId/{studentId}")
 	public ResponseEntity<List<Message>> getMessagesByStudentId(@PathVariable("studentId") int studentId) {
 		List<Message> message = messageService.getMessagesByStudentId(studentId);
-		logger.info("message return Successfully By Student ID "+studentId);
+		logger.info("Message return successfully by student Id: " + studentId);
 		return new ResponseEntity<List<Message>>(message, HttpStatus.OK);
 	}
 
