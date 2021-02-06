@@ -46,6 +46,14 @@ public class StudentUserController {
 	@PostMapping("/addStudent")
 	public User addUser(@Valid @RequestBody User userDetails) {
 		User userInfo = userService.addUser(userDetails);
+		if(userInfo==null)
+		{
+			throw new DataNotFoundException("User info should not be null");
+		}
+		if(!userInfo.getRoleType().equals("student"))
+		{
+			throw new DataNotFoundException("you are not authorized");
+		}
 		logger.info("Student Added Sucessfully");
 		return userInfo;
 	}
