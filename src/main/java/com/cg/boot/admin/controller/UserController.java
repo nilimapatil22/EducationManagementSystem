@@ -45,13 +45,23 @@ public class UserController {
 	@PostMapping("/add")
 	public User addUser(@Valid @RequestBody User userDetails) {
 		User userInfo = userService.addUser(userDetails);
+
 		if (userInfo == null) {
 			throw new DataNotFoundException("Invalida user information");
 		}
 		if (!userInfo.getRoleType().equals("admin")) {
+
+		if(userInfo==null)
+		{
+			throw new DataNotFoundException("Invalid user information");
+		}
+		if(!userInfo.getRoleType().equals("Admin"))
+		{
+
 			throw new DataNotFoundException("you are not authorized");
 		}
 		logger.info("Admin Added Successfully");
+		}
 		return userInfo;
 	}
 
