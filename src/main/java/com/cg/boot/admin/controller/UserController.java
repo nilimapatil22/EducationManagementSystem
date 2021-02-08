@@ -22,7 +22,6 @@ import com.cg.boot.exceptions.DataNotFoundException;
 import com.cg.boot.model.User;
 import com.cg.boot.service.IUserService;
 
-
 /**
  * @author Prajakta
  *
@@ -32,32 +31,34 @@ import com.cg.boot.service.IUserService;
 public class UserController {
 	@Autowired
 	IUserService userService;
-	Logger logger=LoggerFactory.getLogger(UserController.class);
-	
+	Logger logger = LoggerFactory.getLogger(UserController.class);
 
-	/*
-	 * delete User based on user Id
-=======
 	/**
-	 * This method accepts and saves User details through object. 
-	 * Return an object of user containing all
-	 * arguments which has been saved.
+	 * This method accepts and saves admin details through object. Return an object
+	 * of user containing all arguments which has been saved.
 	 * 
 	 * @param : userDetails {@link User}
 	 * @return : User {@link User}
->>>>>>> 7b29c73f313065195e06fbdbd0358357b62f1d5e
 	 */
 
 	@PostMapping("/add")
 	public User addUser(@Valid @RequestBody User userDetails) {
 		User userInfo = userService.addUser(userDetails);
+		if(userInfo==null)
+		{
+			throw new DataNotFoundException("Invalida user information");
+		}
+		if(!userInfo.getRoleType().equals("admin"))
+		{
+			throw new DataNotFoundException("you are not authorized");
+		}
 		logger.info("Admin Added Successfully");
 		return userInfo;
 	}
 
 	/**
-	 * This method accepts user id which user has inserted. Return response 
-	 * entity containing user based on  id
+	 * This method accepts user id which user has inserted. Return response entity
+	 * containing user based on id
 	 * 
 	 * @param id {@link User}
 	 * @return {@link ResponseEntity}: user {@link User} {@link HttpStatus}
@@ -66,17 +67,19 @@ public class UserController {
 	@GetMapping("/getUser/{id}")
 	public ResponseEntity<User> getUser(@PathVariable("id") int id) {
 		User user = userService.getUser(id);
-		if (user == null) {
-			logger.warn("User not found with ID "+id);
 
-			logger.warn("user not found");
+		if (user == null) {
+			logger.warn("User not found with ID " + id);
 
 			throw new DataNotFoundException("No user present with given id: " + id);
 		}
-		logger.info("Admin Details found Successfully with ID "+id);
+		
+
+		logger.info("Admin Details found Successfully with ID " + id);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 
 	}
+
 	/**
 	 * This method will accepts and return list of all users
 	 * 
@@ -92,8 +95,9 @@ public class UserController {
 
 	/**
 	 * This method accepts and update user information which user has inserted
-	 * through object. Return response entity containing details of user
-	 *  which has been updated.
+	 * through object. Return response entity containing details of user which has
+	 * been updated.
+	 * 
 	 * @param user {@link User}
 	 * @return {@link ResponseEntity} userInfo {@link HttpStatus}
 	 */
@@ -110,9 +114,9 @@ public class UserController {
 	}
 
 	/**
-	 * This method accepts user Id to delete user details based on user Id
-	 *  It will check userId, if it is null then it will throw exception. Return
-	 * list of remaining schedules except deleted one.
+	 * This method accepts user Id to delete user details based on user Id It will
+	 * check userId, if it is null then it will throw exception. Return list of
+	 * remaining schedules except deleted one.
 	 * 
 	 * @param userId :{@link Integer}
 	 * @return {@link ResponseEntity} user {@link List} {@link HttpStatus}
@@ -122,7 +126,7 @@ public class UserController {
 	public String deleteUser(@PathVariable("id") int userId) {
 		List<User> user = userService.deleteUser(userId);
 		if (user == null) {
-			logger.info("Admin found to delete with ID "+userId);
+			logger.info("Admin found to delete with ID " + userId);
 			throw new DataNotFoundException("No user present to delete with given id: " + userId);
 		}
 		logger.info("Admin id deleted successfully");
