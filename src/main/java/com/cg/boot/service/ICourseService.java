@@ -22,8 +22,8 @@ public interface ICourseService {
 	ChooseCourse getChoosedCourseDetails(int courseId, int studentId);
 
 	/**
-	 * This method finds courses by passed student Id. Returns list of courses
-	 * based on student Id. Check whether list of courses is empty or not.
+	 * This method finds courses by passed student Id. Returns list of courses based
+	 * on student Id. Check whether list of courses is empty or not.
 	 * 
 	 * @param studentId : {@link Integer}
 	 * @return {@link List}
