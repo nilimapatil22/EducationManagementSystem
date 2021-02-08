@@ -15,6 +15,11 @@ import com.cg.boot.model.Course;
 public interface CourseRepository extends JpaRepository<Course,Integer>{
     
 	Course findByCourseName(String courseName);
+
+
+
+	//public List<Course> findAllByStudentId(int studentId);
+
 	
 
 }
