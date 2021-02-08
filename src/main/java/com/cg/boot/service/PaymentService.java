@@ -51,6 +51,7 @@ public class PaymentService implements IPaymentService {
 	 * This method saves payment with passed payment object. Check authorized user
 	 * id to perform operation. Check input validations. Return a saved payment
 	 * 
+	 * @throws DataNotFoundException
 	 * @param payment : {@link Payment}
 	 * @return {@link Payment}
 	 */
@@ -109,6 +110,7 @@ public class PaymentService implements IPaymentService {
 	 * This method perform validation of bank account number. Checks format of bank
 	 * account number. Return true or false based on condition.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param AccountNo : {@link Long}
 	 * @return flag : {@link Boolean}
 	 */
@@ -130,6 +132,7 @@ public class PaymentService implements IPaymentService {
 	 * validations. Check authorized user to perform operation. Return updated
 	 * payment.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param message : {@link Message}
 	 * @return {@link Message}
 	 */

@@ -78,6 +78,7 @@ public class TrainingScheduleService implements ITrainingScheduleService {
 	 * schedules based on student Id. Check whether list of schedules is empty or
 	 * not.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param studentId : {@link Integer}
 	 * @return {@link List}
 	 */
@@ -97,6 +98,7 @@ public class TrainingScheduleService implements ITrainingScheduleService {
 	 * validations. Check authorized user to perform operation. Return updated
 	 * schedule.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param schedule : {@link TrainingSchedule}
 	 * @return {@link TrainingSchedule}
 	 */
@@ -122,6 +124,7 @@ public class TrainingScheduleService implements ITrainingScheduleService {
 	 * available to delete. Return list of all remaining schedules except deleted
 	 * one.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param scheduleId : {@link Integer}
 	 * @param userId     : {@link Integer}
 	 * @return {@link List}

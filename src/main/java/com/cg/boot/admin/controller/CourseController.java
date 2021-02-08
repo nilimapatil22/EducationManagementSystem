@@ -53,6 +53,7 @@ public class CourseController {
 	 * This method accepts course Id which user has inserted. Return response entity
 	 * containing course details based on course Id.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param id : {@link Integer}
 	 * @return {@link ResponseEntity}:course {@link Course}, {@link HttpStatus}
 	 */
@@ -87,6 +88,7 @@ public class CourseController {
 	 * object. Return response entity containing details of course which has been
 	 * updated.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param course : {@link Course}
 	 * @return {@link ResponseEntity}: course {@link Course}, {@link HttpStatus}
 	 */
@@ -107,6 +109,7 @@ public class CourseController {
 	 * user Id to check authorized user to perform operation. Return list of
 	 * remaining courses except deleted one
 	 * 
+	 * @throws DataNotFoundException
 	 * @param courseId : {@link Integer}
 	 * @param userId   : {@link Integer}
 	 * @return {@link ResponseEntity}: coursesList {@link List}, {@link HttpStatus}

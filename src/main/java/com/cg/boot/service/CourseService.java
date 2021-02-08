@@ -2,7 +2,6 @@ package com.cg.boot.service;
 
 import java.util.List;
 
-
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -32,7 +31,7 @@ public class CourseService implements ICourseService {
 	@Autowired
 	UserService userService;
 	Logger logger = LoggerFactory.getLogger(CourseService.class);
-    
+
 	/**
 	 * This method accepts and saves courses which user has inserted through object.
 	 * Return an object of course containing all arguments which has been saved.
@@ -46,7 +45,7 @@ public class CourseService implements ICourseService {
 		userService.validateAdminId(course.getAdminId());
 		return repository.save(course);
 	}
-	
+
 	/**
 	 * This method accepts course Id which user has inserted. Return response entity
 	 * containing course details based on course Id.
@@ -60,7 +59,7 @@ public class CourseService implements ICourseService {
 	public Course getCourse(int id) {
 		return repository.findById(id).orElse(null);
 	}
-    
+
 	/**
 	 * This method returns list of all courses.
 	 * 
@@ -71,7 +70,7 @@ public class CourseService implements ICourseService {
 	public List<Course> getAllCourses() {
 		return repository.findAll();
 	}
-    
+
 	/**
 	 * This method accepts and update courses which user has inserted through
 	 * object. Return response entity containing details of course which has been
@@ -86,12 +85,12 @@ public class CourseService implements ICourseService {
 		userService.validateAdminId(course.getAdminId());
 		Course courseDetails = getCourse(course.getCourseId());
 		if (courseDetails != null) {
-			logger.warn("Course Details not found for update");
+			logger.info("Course Details found for update");
 			courseDetails = repository.save(course);
 		}
 		return courseDetails;
 	}
-    
+
 	/**
 	 * This method accepts course Id to delete course based on course Id. Accepts
 	 * user Id to check authorized user to perform operation. Return list of
@@ -108,17 +107,17 @@ public class CourseService implements ICourseService {
 		repository.deleteById(courseId);
 		return repository.findAll();
 	}
-    
-	
+
 	/**
-	 * This method validate the course. Check name of passed course. Return
-	 * true or false based on condition.
+	 * This method validate the course. Check name of passed course. Return true or
+	 * false based on condition.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param course     : {@link String}
 	 * @param courseName :{@link String}
 	 * @return flag : {@link Boolean}
 	 */
- 
+
 	public boolean validateCourse(String courseName) {
 		Course course = repository.findByCourseName(courseName);
 		if (course == null) {
@@ -127,10 +126,10 @@ public class CourseService implements ICourseService {
 		return true;
 
 	}
-    
+
 	/**
-	 * This method performs choose Course Details. Check if selected course is present
-	 * in database or not. Return course name and Id based on student Id.
+	 * This method performs choose Course Details. Check if selected course is
+	 * present in database or not. Return course name and Id based on student Id.
 	 * 
 	 * @param courseId  : {@link Integer}
 	 * @param studentId : {@link Integer}
@@ -149,11 +148,12 @@ public class CourseService implements ICourseService {
 
 		return chooseCourse;
 	}
-    
+
 	/**
 	 * This method finds courses by passed student Id. Returns list of courses based
 	 * on student Id. Check whether list of courses is empty or not.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param studentId : {@link Integer}
 	 * @return {@link List}
 	 */
@@ -162,27 +162,26 @@ public class CourseService implements ICourseService {
 	public List<ChooseCourse> getChoosedCoursesByStudentId(int studentId) {
 		List<ChooseCourse> chooseCourses = chooseCourseRepository.findAllByStudentId(studentId);
 		if (chooseCourses.isEmpty()) {
-			logger.warn("Course Details not found for ID "+studentId);
+			logger.warn("Course Details not found for ID " + studentId);
 			throw new DataNotFoundException("Choosed Courses not found");
 		}
 		return chooseCourses;
 	}
 	/**
-	 * This method finds courses by passed student Id. Returns list of courses
-	 * based on student Id. Check whether list of courses is empty or not.
+	 * This method finds courses by passed student Id. Returns list of courses based
+	 * on student Id. Check whether list of courses is empty or not.
 	 * 
 	 * @param studentId : {@link Integer}
 	 * @return {@link List}
 	 */
-	/*@Override
-	public List<Course> getCoursesByStudentId(int studentId) {
-		List<Course> list = repository.findAllByStudentId(studentId);
-		if (list.isEmpty()) {
-			logger.warn("No Courses are present with given student id: " + studentId);
-			throw new DataNotFoundException("No Courses are present with given student id: " + studentId);
-		}
-		return list;
-	}*/
-
+	/*
+	 * @Override public List<Course> getCoursesByStudentId(int studentId) {
+	 * List<Course> list = repository.findAllByStudentId(studentId); if
+	 * (list.isEmpty()) {
+	 * logger.warn("No Courses are present with given student id: " + studentId);
+	 * throw new
+	 * DataNotFoundException("No Courses are present with given student id: " +
+	 * studentId); } return list; }
+	 */
 
 }

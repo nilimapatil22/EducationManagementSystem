@@ -14,6 +14,7 @@ import com.cg.boot.exceptions.DataNotFoundException;
 import com.cg.boot.model.ChooseTrainer;
 import com.cg.boot.model.Trainer;
 import com.cg.boot.service.ITrainerService;
+
 /**
  * 
  * @author Madhuri
@@ -25,24 +26,27 @@ public class ChooseTrainerController {
 
 	@Autowired
 	ITrainerService service;
-	Logger logger=LoggerFactory.getLogger(ChooseTrainerController.class);
-	
+	Logger logger = LoggerFactory.getLogger(ChooseTrainerController.class);
+
 	/**
-	 * The given method returns the trainer list which are choose by student.
-	 * If given trainer id is not present then returns trainer not found.
+	 * The given method returns the trainer list which are choose by student. If
+	 * given trainer id is not present then returns trainer not found.
+	 * 
+	 * @throws DataNotFoundException
 	 * @param trainerId : {@link Integer}
 	 * @param studentId : {@link Integer}
 	 * @return {@link ResponseEntity} : {@link Trainer}, {@link HttpStatus}
 	 * @author Madhuri
 	 */
 	@GetMapping("/getChoosedTrainer/{trainerId}/{studentId}")
-	public ResponseEntity<ChooseTrainer> getTrainerDetails(@PathVariable("trainerId") int trainerId,@PathVariable("studentId") int studentId) {
-		ChooseTrainer trainer = service.getTrainerDetails(trainerId,studentId);
+	public ResponseEntity<ChooseTrainer> getTrainerDetails(@PathVariable("trainerId") int trainerId,
+			@PathVariable("studentId") int studentId) {
+		ChooseTrainer trainer = service.getTrainerDetails(trainerId, studentId);
 		if (trainer == null) {
 			logger.error("Course Trainer not Choosen");
 			throw new DataNotFoundException("Trainer Not Found By these ID");
 		}
 		logger.info("Course trainer Choose Successfully");
-		return new ResponseEntity<ChooseTrainer>(trainer,HttpStatus.OK);
+		return new ResponseEntity<ChooseTrainer>(trainer, HttpStatus.OK);
 	}
 }

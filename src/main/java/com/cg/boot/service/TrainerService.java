@@ -31,13 +31,14 @@ public class TrainerService implements ITrainerService {
 	ChooseTrainerRepository chooseTrainerRepository;
 	@Autowired
 	UserService userService;
-	Logger logger=LoggerFactory.getLogger(TrainerService.class);
-	
+	Logger logger = LoggerFactory.getLogger(TrainerService.class);
+
 	/**
 	 * This method accepts and saves trainer details which user has inserted through
 	 * object. Return an object of trainer containing all arguments which has been
 	 * saved. Validate user is admin.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param trainer : {@link Trainer}
 	 * @return Trainer : {@link Trainer}
 	 */
@@ -56,13 +57,13 @@ public class TrainerService implements ITrainerService {
 		}
 		return repository.save(trainer);
 	}
-    
 
 	/**
 	 * This method accepts and update trainers detail which user has inserted
 	 * through object. Return response entity containing details of trainer which
 	 * has been updated.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param trainer : {@link Trainer}
 	 * @return {@link ResponseEntity}: trainer {@link Trainer}, {@link HttpStatus}
 	 */
@@ -86,10 +87,10 @@ public class TrainerService implements ITrainerService {
 	 * This method validate the trainer phone number. Check phone no of trainer.
 	 * Return true or false based on condition.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param phoneNo : {@link String}
 	 * @return flag : {@link Boolean}
 	 */
-
 
 	@Override
 	public boolean isValidTrainerPhoneNo(String phoneNo) {
@@ -109,10 +110,11 @@ public class TrainerService implements ITrainerService {
 	 * This method validate the trainer Name. Check Name of trainer. Return true or
 	 * false based on condition.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param trainerName : {@link String}
 	 * @return flag : {@link Boolean}
 	 */
-	
+
 	@Override
 	public boolean isValidTrainerName(String trainerName) {
 		boolean flag = false;
@@ -124,7 +126,7 @@ public class TrainerService implements ITrainerService {
 		}
 		return flag;
 	}
-    
+
 	/**
 	 * This method accepts trainer Id which user has inserted. Return response
 	 * entity containing course details based on trainer Id.
@@ -138,7 +140,7 @@ public class TrainerService implements ITrainerService {
 	public Trainer getTrainer(int id) {
 		return repository.findById(id).orElse(null);
 	}
-	
+
 	/**
 	 * This method performs choose Course Details with trainer details. Check if
 	 * selected trainer id is present in database or not. Return course name and Id
@@ -151,19 +153,18 @@ public class TrainerService implements ITrainerService {
 	 */
 
 	@Override
-	public ChooseTrainer getTrainerDetails(int trainerId,int studentId) {
+	public ChooseTrainer getTrainerDetails(int trainerId, int studentId) {
 		userService.validateStudentId(studentId);
-		Trainer trainer= repository.findById(trainerId).orElse(null);
-		ChooseTrainer chooseTrainer=null;
-		if(trainer!=null) {
-			
-			chooseTrainer=new ChooseTrainer(studentId, trainerId, trainer.getTrainerName(),trainer.getCourseName());
-		
+		Trainer trainer = repository.findById(trainerId).orElse(null);
+		ChooseTrainer chooseTrainer = null;
+		if (trainer != null) {
+
+			chooseTrainer = new ChooseTrainer(studentId, trainerId, trainer.getTrainerName(), trainer.getCourseName());
+
 		}
 		chooseTrainerRepository.save(chooseTrainer);
 		return chooseTrainer;
 	}
-	
 
 	/**
 	 * These method return all trainers detail.
@@ -175,7 +176,7 @@ public class TrainerService implements ITrainerService {
 	public List<Trainer> getAllTrainers() {
 		return repository.findAll();
 	}
-    
+
 	/**
 	 * This method finds trainer by passed user Id. Returns list of trainers based
 	 * on trainer Id. Check whether list of courses is empty or not.
@@ -186,11 +187,10 @@ public class TrainerService implements ITrainerService {
 	 */
 
 	@Override
-	public List<Trainer> deleteTrainer(int trainerId,int userId) {
+	public List<Trainer> deleteTrainer(int trainerId, int userId) {
 		userService.validateAdminId(userId);
 		repository.deleteById(trainerId);
 		return repository.findAll();
 	}
-
 
 }

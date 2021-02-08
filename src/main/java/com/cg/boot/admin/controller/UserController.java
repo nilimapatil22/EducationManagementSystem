@@ -37,6 +37,7 @@ public class UserController {
 	 * This method accepts and saves admin details through object. Return an object
 	 * of user containing all arguments which has been saved.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param : userDetails {@link User}
 	 * @return : User {@link User}
 	 */
@@ -44,12 +45,10 @@ public class UserController {
 	@PostMapping("/add")
 	public User addUser(@Valid @RequestBody User userDetails) {
 		User userInfo = userService.addUser(userDetails);
-		if(userInfo==null)
-		{
+		if (userInfo == null) {
 			throw new DataNotFoundException("Invalida user information");
 		}
-		if(!userInfo.getRoleType().equals("admin"))
-		{
+		if (!userInfo.getRoleType().equals("admin")) {
 			throw new DataNotFoundException("you are not authorized");
 		}
 		logger.info("Admin Added Successfully");
@@ -60,6 +59,7 @@ public class UserController {
 	 * This method accepts user id which user has inserted. Return response entity
 	 * containing user based on id
 	 * 
+	 * @throws DataNotFoundException
 	 * @param id {@link User}
 	 * @return {@link ResponseEntity}: user {@link User} {@link HttpStatus}
 	 */
@@ -73,7 +73,6 @@ public class UserController {
 
 			throw new DataNotFoundException("No user present with given id: " + id);
 		}
-		
 
 		logger.info("Admin Details found Successfully with ID " + id);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
@@ -98,6 +97,7 @@ public class UserController {
 	 * through object. Return response entity containing details of user which has
 	 * been updated.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param user {@link User}
 	 * @return {@link ResponseEntity} userInfo {@link HttpStatus}
 	 */
@@ -118,6 +118,7 @@ public class UserController {
 	 * check userId, if it is null then it will throw exception. Return list of
 	 * remaining schedules except deleted one.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param userId :{@link Integer}
 	 * @return {@link ResponseEntity} user {@link List} {@link HttpStatus}
 	 */

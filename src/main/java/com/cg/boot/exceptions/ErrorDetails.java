@@ -2,6 +2,12 @@ package com.cg.boot.exceptions;
 
 import java.time.LocalDate;
 
+/**
+ * @author Priyanka. This class includes declaration of parameters of ErrorDetails
+ *         class, default constructor, parameterized constructors, getter and
+ *         setter methods of parameters and toString method to display.
+ *
+ */
 public class ErrorDetails {
 
 	private String message;

@@ -6,7 +6,11 @@ import javax.validation.Valid;
 
 import com.cg.boot.exceptions.DataNotFoundException;
 import com.cg.boot.model.Payment;
-
+/**
+ * @author Nilima. This interface contains abstract methods PaymentService
+ *         class.
+ *
+ */
 public interface IPaymentService {
 
 	Payment getPayment(int paymentId);

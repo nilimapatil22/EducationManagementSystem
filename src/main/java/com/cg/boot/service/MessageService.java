@@ -25,11 +25,13 @@ public class MessageService implements IMessageService {
 
 	@Autowired
 	UserService userService;
-	Logger logger=LoggerFactory.getLogger(MessageService.class);
+	Logger logger = LoggerFactory.getLogger(MessageService.class);
+
 	/**
 	 * This method saves message with passed object. Check authorized user id to
 	 * perform operation Return a saved message
 	 * 
+	 * @throws DataNotFoundException
 	 * @param message : {@link Message}
 	 * @return {@link Message}
 	 */
@@ -69,6 +71,7 @@ public class MessageService implements IMessageService {
 	 * This method finds messages by passed student Id. Returns list of messages
 	 * based on student Id. Check whether list of messages is empty or not.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param studentId : {@link Integer}
 	 * @return {@link List}
 	 */
@@ -88,6 +91,7 @@ public class MessageService implements IMessageService {
 	 * validations. Check authorized user to perform operation. Return updated
 	 * message.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param message : {@link Message}
 	 * @return {@link Message}
 	 */
@@ -114,6 +118,7 @@ public class MessageService implements IMessageService {
 	 * authorize user to perform operation. Check message whether it is available to
 	 * delete. Return list of all remaining messages except deleted one.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param messageId : {@link Integer}
 	 * @param userId    : {@link Integer}
 	 * @return {@link List}
