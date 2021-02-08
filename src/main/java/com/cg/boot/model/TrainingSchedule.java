@@ -12,6 +12,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+/**
+ * @author Priyanka This class includes declaration of parameters of training
+ *         schedule class, default constructor, parameterized constructors,
+ *         getter and setter methods of parameters and toString method to
+ *         display.
+ *
+ */
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "training_schedule")
@@ -23,7 +31,7 @@ public class TrainingSchedule implements Serializable {
 	private int scheduleId;
 	@Column(name = "course_name")
 	@NotEmpty(message = "Course Name should not empty")
-	@Size(min = 4,message = "Min 4 chars required")
+	@Size(min = 4, message = "Min 4 chars required")
 	private String courseName;
 	@NotEmpty(message = "Date should not empty")
 	@Pattern(regexp = "((?:20)[2-3][1-9])-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])", message = "Date should be in yyyy-MM-dd format")

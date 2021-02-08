@@ -1,6 +1,7 @@
 package com.cg.boot.model;
 
 import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -9,6 +10,13 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+
+/**
+ * @author Nilima This class includes declaration of parameters of progress
+ *         details class, default constructor, parameterized constructors, getter
+ *         and setter methods of parameters and toString method to display.
+ *
+ */
 
 @Entity
 @Table(name = "Progress_master")

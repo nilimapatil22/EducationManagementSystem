@@ -1,6 +1,7 @@
 package com.cg.boot.model;
 
 import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,6 +11,13 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+/**
+ * @author Nilima. This class includes declaration of parameters of previous
+ *         progress details class, default constructor, parameterized
+ *         constructors, getter and setter methods of parameters and toString
+ *         method to display.
+ *
+ */
 @Entity
 @Table(name = "Previous_Progress_master")
 public class PreviousProgressDetails {
@@ -40,7 +48,7 @@ public class PreviousProgressDetails {
 
 	}
 
-	public PreviousProgressDetails(int gradeId, String grade, String date, int adminId,int studentId) {
+	public PreviousProgressDetails(int gradeId, String grade, String date, int adminId, int studentId) {
 		super();
 		this.gradeId = gradeId;
 		this.grade = grade;

@@ -31,9 +31,10 @@ public class ProgressDetailsService implements IProgressDetailsService {
 	PreviousProgressDetails previousDetails;
 	@Autowired
 	UserService userService;
-	
+
 	/**
-	 * This method finds all progress details by grade and return list of progress details
+	 * This method finds all progress details by grade and return list of progress
+	 * details
 	 * 
 	 * @param grade{@link String}
 	 * @return {@link List}
@@ -46,8 +47,8 @@ public class ProgressDetailsService implements IProgressDetailsService {
 
 	/**
 	 * This method check that the id is student id or not if it is student id then
-	 * it finds all  previous progress details by student id and return list of previous
-	 * progress details
+	 * it finds all previous progress details by student id and return list of
+	 * previous progress details
 	 * 
 	 * @param studentId {@link Integer}
 	 * @return {@link List}
@@ -60,58 +61,61 @@ public class ProgressDetailsService implements IProgressDetailsService {
 	}
 
 	/**
-	 * This method saves progress in progress details and previous progress details database
-	 * Check input validation and return saved progress details.
+	 * This method saves progress in progress details and previous progress details
+	 * database Check input validation and return saved progress details.
 	 * 
-	 * @param progressDetails {@link  ProgressDetails }
+	 * @param progressDetails {@link ProgressDetails }
 	 * @return progressDetails {@link ProgressDetails}
 	 */
 	@Override
 	public ProgressDetails addProgressDetails(@Valid ProgressDetails progressDetails) {
 		userService.validateAdminId(progressDetails.getAdminId());
-    	userService.validateStudentId(progressDetails.getStudentId());
-		previousDetails=new PreviousProgressDetails(progressDetails.getGrade(),progressDetails.getDate(),progressDetails.getAdminId(),progressDetails.getStudentId());
+		userService.validateStudentId(progressDetails.getStudentId());
+		previousDetails = new PreviousProgressDetails(progressDetails.getGrade(), progressDetails.getDate(),
+				progressDetails.getAdminId(), progressDetails.getStudentId());
 		previousRepository.save(previousDetails);
 		return repository.save(progressDetails);
 	}
 
 	/**
-	 * This method update progress details. Check input validation and return updated 
-	 * progress details.
+	 * This method update progress details. Check input validation and return
+	 * updated progress details.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param progressDetails {@link ProgressDetails}
 	 * @return ProgressDetails {@link ProgressDetails}
 	 */
 	@Override
 	public ProgressDetails updateProgressDetails(ProgressDetails progressDetails) {
 		userService.validateAdminId(progressDetails.getAdminId());
-    	userService.validateStudentId(progressDetails.getStudentId());
-    	if(!isValidDate(progressDetails.getDate())) {
-    		throw new DataNotFoundException("Date should be in yyyy-MM-dd format");
-    	}
-		previousDetails=new PreviousProgressDetails(progressDetails.getGrade(),progressDetails.getDate(),progressDetails.getAdminId(),progressDetails.getStudentId());
+		userService.validateStudentId(progressDetails.getStudentId());
+		if (!isValidDate(progressDetails.getDate())) {
+			throw new DataNotFoundException("Date should be in yyyy-MM-dd format");
+		}
+		previousDetails = new PreviousProgressDetails(progressDetails.getGrade(), progressDetails.getDate(),
+				progressDetails.getAdminId(), progressDetails.getStudentId());
 		previousRepository.save(previousDetails);
 		return repository.save(progressDetails);
 	}
 
-
 	/**
-	 * This method first check it is admin id or not. If it is admin id then it delete progress details
-	 *  based on progress id and return list of progress details except deleted one.
-	 *  
-	 *  @param progressId {@link Integer}
-	 *  @param userId {@link Integer}
-	 *  @return list {@link List}
-	 */  
+	 * This method first check it is admin id or not. If it is admin id then it
+	 * delete progress details based on progress id and return list of progress
+	 * details except deleted one.
+	 * 
+	 * @param progressId {@link Integer}
+	 * @param userId     {@link Integer}
+	 * @return list {@link List}
+	 */
 	@Override
-	public List<ProgressDetails> deleteProgressDetails(int progressId,int userId) {
+	public List<ProgressDetails> deleteProgressDetails(int progressId, int userId) {
 		userService.validateAdminId(userId);
 		repository.deleteById(progressId);
 		return repository.findAll();
 	}
-	
+
 	/**
-	 * This method accepts grade id and find  the progress detail based on grade id.
+	 * This method accepts grade id and find the progress detail based on grade id.
 	 * Return progress details based on grade id otherwise return null.
 	 * 
 	 * @param gradeId {@link Integer}
@@ -132,24 +136,25 @@ public class ProgressDetailsService implements IProgressDetailsService {
 	public List<ProgressDetails> getAllProgressDetails() {
 		return repository.findAll();
 	}
-	
+
 	/**
-	 * This method validate date, It matches with the format given in the method.If it  matched 
-	 * then it will return  flag as true otherwise flag as false.
+	 * This method validate date, It matches with the format given in the method.If
+	 * it matched then it will return flag as true otherwise flag as false.
 	 * 
 	 * @param date {@link String}
 	 * @return flag {@link Boolean}
 	 */
 	@Override
-    public boolean isValidDate(String date) {
+	public boolean isValidDate(String date) {
 		boolean flag = false;
-		 String regex = "((?:20)[2-3][1-9])-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])"; 
-		 Pattern p = Pattern.compile(regex); Matcher m = p.matcher(date);
-		 if(m.matches()) {
-			 flag = true;
-		 }
-		 return flag;
-		
+		String regex = "((?:20)[2-3][1-9])-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])";
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(date);
+		if (m.matches()) {
+			flag = true;
+		}
+		return flag;
+
 	}
 
 }

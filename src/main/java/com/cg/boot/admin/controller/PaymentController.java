@@ -35,6 +35,7 @@ public class PaymentController {
 	 * This method accepts payment Id which user has inserted. Return response
 	 * entity containing payment details based on payment Id.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param paymentId : {@link Integer}
 	 * @return {@link ResponseEntity}: payment {@link Payment}, {@link HttpStatus}
 	 */
@@ -52,6 +53,7 @@ public class PaymentController {
 	/**
 	 * This method returns list of all payments
 	 * 
+	 * @throws DataNotFoundException
 	 * @return {@link ResponseEntity}: payment {@link Payment}, {@link HttpStatus}
 	 */
 
@@ -71,6 +73,7 @@ public class PaymentController {
 	 * object. Return response entity containing details of payment which has been
 	 * updated.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param payment : {@link Payment}
 	 * @param userId  : {@link Integer}
 	 * @return {@link ResponseEntity}: paymentInfo {@link Payment}

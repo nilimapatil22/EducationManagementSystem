@@ -12,6 +12,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+/**
+ * @author Priyanka. This class includes declaration of parameters of message
+ *         class, default constructor, parameterized constructors, getter and
+ *         setter methods of parameters and toString method to display.
+ *
+ */
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "message_master")

@@ -6,7 +6,11 @@ import javax.validation.Valid;
 
 import com.cg.boot.model.PreviousProgressDetails;
 import com.cg.boot.model.ProgressDetails;
-
+/**
+ * @author Nilima. This interface contains abstract methods ProgressDetailsService
+ *         class.
+ *
+ */
 public interface IProgressDetailsService {
 
 	List<ProgressDetails> getAllProgressDetails(String grade);

@@ -12,6 +12,13 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+/**
+ * @author Prajakta This class includes declaration of parameters of user class,
+ *         default constructor, parameterized constructors, getter and setter
+ *         methods of parameters and toString method to display.
+ *
+ */
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "user_master")
@@ -23,7 +30,7 @@ public class User implements Serializable {
 
 	@NotEmpty(message = "First name should not be empty")
 	@Column(name = "first_name")
-	@Pattern(regexp = "[A-Z]{1}[a-z]*",message="First Name should be capital ")
+	@Pattern(regexp = "[A-Z]{1}[a-z]*", message = "First Name should be capital ")
 	private String firstName;
 
 	@NotEmpty(message = "last name should not be empty")
@@ -52,14 +59,12 @@ public class User implements Serializable {
 	public User() {
 
 	}
-	
 
 	public User(int userId, @NotEmpty(message = "Password should not be empty") String password) {
 		super();
 		this.userId = userId;
 		this.password = password;
 	}
-
 
 	public User(int userId, String firstName, String lastName, String email, String password, long phoneNumber,
 			String address, String roleType) {

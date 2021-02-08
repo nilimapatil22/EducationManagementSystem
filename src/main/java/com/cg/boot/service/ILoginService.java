@@ -1,7 +1,11 @@
 package com.cg.boot.service;
 
 import com.cg.boot.model.User;
-
+/**
+ * @author Prajkta. This interface contains abstract methods LoginService
+ *         class.
+ *
+ */
 public interface ILoginService {
 
 	

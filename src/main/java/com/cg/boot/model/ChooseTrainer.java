@@ -1,11 +1,20 @@
 package com.cg.boot.model;
 
 import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+/**
+ * @author Nilima. This class includes declaration of parameters of choose
+ *         trainer class, default constructor, parameterized constructors,
+ *         getter and setter methods of parameters and toString method to
+ *         display.
+ *
+ */
 
 @Entity
 @Table(name = "Student_Trainer")
@@ -31,8 +40,8 @@ public class ChooseTrainer {
 	ChooseTrainer() {
 
 	}
- 
-	public ChooseTrainer(int studentId,int trainerId, String trainerName,String courseName) {
+
+	public ChooseTrainer(int studentId, int trainerId, String trainerName, String courseName) {
 		super();
 		this.studentId = studentId;
 		this.trainerId = trainerId;

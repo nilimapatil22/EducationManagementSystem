@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cg.boot.exceptions.DataNotFoundException;
 import com.cg.boot.model.Message;
 import com.cg.boot.service.IMessageService;
+
 /**
  * 
  * @author Priyanka
@@ -49,6 +50,7 @@ public class StudentMessageController {
 	 * This method accepts message Id which user has inserted. Return response
 	 * entity containing message details based on message Id.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param messageId : {@link Integer}
 	 * @return {@link ResponseEntity} : message {@link Message}, {@link HttpStatus}
 	 */

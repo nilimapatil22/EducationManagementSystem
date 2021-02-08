@@ -4,7 +4,11 @@ import java.util.List;
 
 import com.cg.boot.model.ChooseTrainer;
 import com.cg.boot.model.Trainer;
-
+/**
+ * @author Madhuri. This interface contains abstract methods TrainerService
+ *         class.
+ *
+ */
 
 public interface ITrainerService {
 	Trainer addTrainer(Trainer trainer);

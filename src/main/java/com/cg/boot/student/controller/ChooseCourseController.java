@@ -35,6 +35,7 @@ public class ChooseCourseController {
 	 * course Id is not present in the database it returns course details are not
 	 * found.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param courseId  : {@link Integer}
 	 * @param studentId : {@link Integer}
 	 * @return {@link ResponseEntity} : Course {@link Course}, {@link HttpStatus}

@@ -30,6 +30,7 @@ public class StudentTrainingScheduleController {
 	 * This method accepts schedule Id which user has inserted. Return response
 	 * entity containing training schedule details based on schedule Id.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param scheduleId : {@link Integer}
 	 * @return {@link ResponseEntity}: trainingSchedule {@link TrainingSchedule},
 	 *         {@link HttpStatus}

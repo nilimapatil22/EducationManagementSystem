@@ -29,7 +29,8 @@ import com.cg.boot.service.ITrainingScheduleService;
 public class TrainingScheduleController {
 	@Autowired
 	ITrainingScheduleService scheduleService;
-	Logger logger=LoggerFactory.getLogger(TrainingScheduleController.class);
+	Logger logger = LoggerFactory.getLogger(TrainingScheduleController.class);
+
 	/**
 	 * This method accepts and saves Training Schedule which user has inserted
 	 * through object. Return an object of Training Schedule containing all
@@ -50,6 +51,7 @@ public class TrainingScheduleController {
 	 * This method accepts schedule Id which user has inserted. Return response
 	 * entity containing training schedule details based on schedule Id.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param scheduleId : {@link Integer}
 	 * @return {@link ResponseEntity}: trainingSchedule {@link TrainingSchedule},
 	 *         {@link HttpStatus}
@@ -58,10 +60,10 @@ public class TrainingScheduleController {
 	public ResponseEntity<TrainingSchedule> getSchedule(@PathVariable("scheduleId") int scheduleId) {
 		TrainingSchedule trainingSchedule = scheduleService.getSchedule(scheduleId);
 		if (trainingSchedule == null) {
-			logger.warn("Training Schedule not found by ID "+scheduleId);
+			logger.warn("Training Schedule not found by ID " + scheduleId);
 			throw new DataNotFoundException("No schedule present with given id: " + scheduleId);
 		}
-		logger.info("Training Schedule return successfully with ID "+scheduleId);
+		logger.info("Training Schedule return successfully with ID " + scheduleId);
 		return new ResponseEntity<TrainingSchedule>(trainingSchedule, HttpStatus.OK);
 
 	}
@@ -91,7 +93,7 @@ public class TrainingScheduleController {
 	@GetMapping("/getScheduleByStudentId/{studentId}")
 	public ResponseEntity<List<TrainingSchedule>> getScheduleByStudentId(@PathVariable("studentId") int studentId) {
 		List<TrainingSchedule> trainingSchedulesList = scheduleService.getScheduleByStudentId(studentId);
-		logger.info("Training Schedule return successfully with Student ID "+studentId);
+		logger.info("Training Schedule return successfully with Student ID " + studentId);
 		return new ResponseEntity<List<TrainingSchedule>>(trainingSchedulesList, HttpStatus.OK);
 	}
 
@@ -126,7 +128,7 @@ public class TrainingScheduleController {
 	public ResponseEntity<List<TrainingSchedule>> deleteSchedule(@PathVariable("scheduleId") int scheduleId,
 			@PathVariable("userId") int userId) {
 		List<TrainingSchedule> trainingSchedulesList = scheduleService.deleteSchedule(scheduleId, userId);
-		logger.info("Training Schedule Deleted successfully with ID "+scheduleId);
+		logger.info("Training Schedule Deleted successfully with ID " + scheduleId);
 		return new ResponseEntity<List<TrainingSchedule>>(trainingSchedulesList, HttpStatus.OK);
 	}
 

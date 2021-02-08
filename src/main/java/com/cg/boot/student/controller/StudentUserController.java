@@ -2,7 +2,6 @@ package com.cg.boot.student.controller;
 
 import java.util.List;
 
-
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -23,7 +22,6 @@ import com.cg.boot.exceptions.DataNotFoundException;
 import com.cg.boot.model.User;
 import com.cg.boot.service.IUserService;
 
-
 /**
  * @author Prajakta
  *
@@ -39,6 +37,7 @@ public class StudentUserController {
 	 * This method accepts and saves User details through object. Return an object
 	 * of user containing all arguments which has been saved.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param : userDetails {@link User}
 	 * @return : User {@link User}
 	 */
@@ -46,12 +45,10 @@ public class StudentUserController {
 	@PostMapping("/addStudent")
 	public User addUser(@Valid @RequestBody User userDetails) {
 		User userInfo = userService.addUser(userDetails);
-		if(userInfo==null)
-		{
+		if (userInfo == null) {
 			throw new DataNotFoundException("User info should not be null");
 		}
-		if(!userInfo.getRoleType().equals("student"))
-		{
+		if (!userInfo.getRoleType().equals("student")) {
 			throw new DataNotFoundException("you are not authorized");
 		}
 		logger.info("Student Added Sucessfully");
@@ -62,6 +59,7 @@ public class StudentUserController {
 	 * This method accepts user id which user has inserted. Return response entity
 	 * containing user based on id
 	 * 
+	 * @throws DataNotFoundException
 	 * @param id {@link User}
 	 * @return {@link ResponseEntity}: user {@link User} {@link HttpStatus}
 	 */
@@ -96,6 +94,7 @@ public class StudentUserController {
 	 * through object. Return response entity containing details of user which has
 	 * been updated.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param user {@link User}
 	 * @return {@link ResponseEntity} userInfo {@link HttpStatus}
 	 */
@@ -116,6 +115,7 @@ public class StudentUserController {
 	 * check userId, if it is null then it will throw exception. Return list of
 	 * remaining schedules except deleted one.
 	 * 
+	 * @throws DataNotFoundException
 	 * @param userId :{@link Integer}
 	 * @return {@link ResponseEntity} user {@link List} {@link HttpStatus}
 	 */
