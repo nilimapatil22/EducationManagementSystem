@@ -46,9 +46,9 @@ public class UserController {
 		User userInfo = userService.addUser(userDetails);
 		if(userInfo==null)
 		{
-			throw new DataNotFoundException("Invalida user information");
+			throw new DataNotFoundException("Invalid user information");
 		}
-		if(!userInfo.getRoleType().equals("admin"))
+		if(!userInfo.getRoleType().equals("Admin"))
 		{
 			throw new DataNotFoundException("you are not authorized");
 		}
