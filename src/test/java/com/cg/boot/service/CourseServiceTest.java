@@ -65,7 +65,7 @@ class CourseServiceTest {
 	 * 
 	 * @param value : {@link Value}
 	 */
-
+    
 	@Test
 	public void updateCourseTest() {
 		Course course = new Course(21, "Java", 2500.0, 30, 6);

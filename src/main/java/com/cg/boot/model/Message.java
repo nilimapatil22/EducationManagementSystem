@@ -18,7 +18,6 @@ import javax.validation.constraints.Size;
  *         setter methods of parameters and toString method to display.
  *
  */
-
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "message_master")
