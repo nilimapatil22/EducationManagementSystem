@@ -38,7 +38,7 @@ public class PreviousProgressDetailsController {
  * @throws DataNotFoundException
  */
 	@GetMapping("/getPreviousProgressDetailsById/{studentId}")
-	public ResponseEntity<List<PreviousProgressDetails>> getProgressDetails(@PathVariable("studentId") int studentId) throws DataNotFoundException {
+	public ResponseEntity<List<PreviousProgressDetails>> getProgressDetails(@PathVariable("studentId") int studentId){
 		List<PreviousProgressDetails> list = service.getAllProgressDetailsByStudentId(studentId);
 		if (list == null) {
 			logger.warn("Previous Progress Details Not found By ID "+studentId);

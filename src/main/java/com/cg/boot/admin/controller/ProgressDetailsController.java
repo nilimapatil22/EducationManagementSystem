@@ -46,7 +46,7 @@ public class ProgressDetailsController {
 	 */
 	
 	@GetMapping("/getProgressDetails/{grade}")
-	public ResponseEntity<List<ProgressDetails>> getGrade(@PathVariable String grade) throws DataNotFoundException {
+	public ResponseEntity<List<ProgressDetails>> getGrade(@PathVariable String grade) {
 		// List<Grade>list=null;
 		List<ProgressDetails> grades = service.getAllProgressDetails(grade);
 		if (grades.isEmpty()) {

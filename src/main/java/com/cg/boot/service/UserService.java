@@ -161,7 +161,7 @@ public class UserService implements IUserService {
 	public boolean validateRoleType(String roleType) {
 		boolean flag = false;
 
-		if ((roleType.matches("Admin")) || (roleType.matches("Student"))) {
+		if ((roleType.matches("admin")) || (roleType.matches("student"))) {
 			flag = true;
 		} else {
 			flag = false;
@@ -204,7 +204,7 @@ public class UserService implements IUserService {
 			logger.warn("Invalid user id");
 			throw new DataNotFoundException("Invalid user id");
 		}
-		if (!userInfo.getRoleType().equals("Admin")) {
+		if (!userInfo.getRoleType().equals("admin")) {
 			logger.warn("Invalid RoleType");
 			throw new DataNotFoundException("You are not authorized");
 		}
@@ -226,7 +226,7 @@ public class UserService implements IUserService {
 			logger.warn("Invalid Student id");
 			throw new DataNotFoundException("Invalid Student id");
 		}
-		if (!userInfo.getRoleType().equals("Student")) {
+		if (!userInfo.getRoleType().equals("student")) {
 			logger.warn("Invalid Role Type");
 			throw new DataNotFoundException("Student id is not valid");
 		}

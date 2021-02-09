@@ -47,7 +47,7 @@ public class UserController {
 		if (userInfo == null) {
 			throw new DataNotFoundException("Invalid user information");
 		}
-		if (!userInfo.getRoleType().equals("admin")) {
+		if (!(userInfo.getRoleType().equals("admin"))) {
 			throw new DataNotFoundException("you are not authorized");
 		}
 		logger.info("Admin Added Successfully");

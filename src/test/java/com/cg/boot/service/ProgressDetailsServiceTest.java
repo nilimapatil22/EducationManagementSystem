@@ -29,13 +29,13 @@ class ProgressDetailsServiceTest {
 
 	@Test
 	public void getAllProgressDetailsTest() {
-		when(repository.findAll()).thenReturn(Stream.of(new ProgressDetails(2, "A", "2021-02-06", 3, 4)).collect(Collectors.toList()));
+		when(repository.findAll()).thenReturn(Stream.of(new ProgressDetails(2, "A", "2021-02-06", 9, 31)).collect(Collectors.toList()));
 		assertEquals(1,service.getAllProgressDetails().size());
 		}
 	
 	@Test
 	public void updateProgressDetailsTest() {
-		ProgressDetails details=new ProgressDetails(2, "A", "2021-02-06", 3, 4);
+		ProgressDetails details=new ProgressDetails(2, "A", "2021-02-06", 9, 31);
 		when(repository.save(details)).thenReturn(details);
 		assertEquals(details, service.updateProgressDetails(details));
 	}
@@ -43,14 +43,14 @@ class ProgressDetailsServiceTest {
 	@Test
 	
 	public void deleteProgressDetailsTest() {
-		ProgressDetails details= new ProgressDetails(2, "A", "2021-02-06", 3, 4);
+		ProgressDetails details= new ProgressDetails(2, "A", "2021-02-06", 9, 1);
 		service.deleteProgressDetails(details.getGradeId(),details.getAdminId());
 		verify(repository, times(1)).deleteById(details.getGradeId());
 	}
 	
 	@Test
 	public void addProgressDetailsTest() {
-		ProgressDetails details= new ProgressDetails(2, "A", "2021-02-06", 3, 4);
+		ProgressDetails details= new ProgressDetails(2, "A", "2021-02-06", 37, 31);
 		when(repository.save(details)).thenReturn(details);
 		assertNotEquals(details,service.addProgressDetails(details));
 	}
