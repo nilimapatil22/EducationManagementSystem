@@ -43,12 +43,9 @@ public class UserController {
 
 	@PostMapping("/add")
 	public User addUser(@Valid @RequestBody User userDetails) {
-		User userInfo = userService.addUser(userDetails);
+		User userInfo = userService.addUserAdmin(userDetails);
 		if (userInfo == null) {
 			throw new DataNotFoundException("Invalid user information");
-		}
-		if (!userInfo.getRoleType().equals("admin")) {
-			throw new DataNotFoundException("you are not authorized");
 		}
 		logger.info("Admin Added Successfully");
 		return userInfo;
@@ -101,7 +98,7 @@ public class UserController {
 
 	@PutMapping("/updateUser")
 	public ResponseEntity<User> updateUserDetails(@Valid @RequestBody User user) {
-		User userInfo = userService.updateUserDetails(user);
+		User userInfo = userService.updateUserDetailsAdmin(user);
 		if (userInfo == null) {
 			logger.warn("Admin Details not found  to update");
 			throw new DataNotFoundException("No user present to update");

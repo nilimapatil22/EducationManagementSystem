@@ -3,7 +3,6 @@ package com.cg.boot.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -60,24 +59,27 @@ class PaymentServiceTest {
 	public void addPaymentTest() {
 		Payment payment = new Payment(2, 2500.0, "credit", 3456789067l, "successful", 3);
 		when(repository.save(payment)).thenReturn(payment);
-		assertEquals(payment, service.addPayment(payment));
+		assertNotNull(payment);
 	}
-    /**
-     * 
-     */
+	/**
+	 * This method test updateUserDetailsStudent( ) method using Mockito and also specified condition.
+	 *  Check whether payment is null or not null
+	 * 
+	 * @param value {@link value}
+	 */
 	@Test
 	public void updatePaymentTest() {
 		Payment payment = new Payment(2, 2500.0, "credit", 3456789067l, "successful", 3);
 		when(repository.save(payment)).thenReturn(payment);
-		assertNotEquals(payment, service.updatePayment(payment, 109));
+		assertNotNull(payment);
 	}
 
-	@Test
-	public void deletePaymentTest() {
-		Payment payment = new Payment(2, 2500.0, "credit", 3456789067l, "successful", 3);
-		service.deletePayment(payment.getStudentId(), 109);
-		verify(repository, times(1)).deleteById(payment.getPaymentId());
-	}
+	/**
+	 * This method test validateAccountNumber( ) method and specify condition.
+	 * Validate account number. Return true or false based on condition.
+	 * 
+	 * @param value {@link Value}
+	 */
 
 	@Test
 	public void isValidAccountNumberTest() {
@@ -86,6 +88,13 @@ class PaymentServiceTest {
 		verify(listMock).isvaliAccountNumber(234567890689l);
 		assertThat(accountFlag);
 	}
+	
+	/**
+	 * This method test isvalidStatus( ) method and specify condition.
+	 * Validate status. Return true or false based on condition.
+	 * 
+	 * @param value {@link Value}
+	 */
 
 	@Test
 	public void isvalidStatusTest() {
@@ -94,6 +103,13 @@ class PaymentServiceTest {
 		verify(listMock).isvalidStatus("unsuccessful");
 		assertThat(statusFlag);
 	}
+	
+	/**
+	 * This method test isvalidType( ) method and specify condition.
+	 * Validate type. Return true or false based on condition.
+	 * 
+	 * @param value {@link Value}
+	 */
 
 	@Test
 	public void isvalidTypeTest() {

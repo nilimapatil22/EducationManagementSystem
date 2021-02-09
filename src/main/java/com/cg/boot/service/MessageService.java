@@ -36,11 +36,30 @@ public class MessageService implements IMessageService {
 	 * @return {@link Message}
 	 */
 	@Override
-	public Message addMessage(Message message) {
+	public Message addMessageByStudent(Message message) {
 		if (userService.getUser(message.getCreatedByUserId()) == null) {
 			logger.warn("Invalid User Id");
 			throw new DataNotFoundException("Invalid User Id");
 		}
+		userService.validateStudentId(message.getCreatedByUserId());
+		return repository.save(message);
+
+	}
+	/**
+	 * This method saves message with passed object. Check authorized user id to
+	 * perform operation Return a saved message
+	 * 
+	 * @throws DataNotFoundException
+	 * @param message : {@link Message}
+	 * @return {@link Message}
+	 */
+	@Override
+	public Message addMessageByAdmin(Message message) {
+		if (userService.getUser(message.getCreatedByUserId()) == null) {
+			logger.warn("Invalid User Id");
+			throw new DataNotFoundException("Invalid User Id");
+		}
+		userService.validateAdminId(message.getCreatedByUserId());
 		return repository.save(message);
 
 	}

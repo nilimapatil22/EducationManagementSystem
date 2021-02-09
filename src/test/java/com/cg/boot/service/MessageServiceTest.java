@@ -21,7 +21,7 @@ import com.cg.boot.repository.MessageRepository;
 import com.fasterxml.jackson.annotation.JacksonInject.Value;
 /**
  * 
- * @author Madhuri
+ * @author Priyanka
  *
  */
 @SpringBootTest
@@ -70,10 +70,23 @@ class MessageServiceTest {
 	 * @param value : {@link Value}
 	 */
 	@Test
-	public void addMessagesTest() {
+	public void addMessagesByStudentTest() {
 		Message message = new Message("Exams have postponed", 0, 108, "2021-01-23");
 		when(repository.save(message)).thenReturn(message);
-		assertEquals(message, iMessageService.addMessage(message));
+		assertEquals(message, iMessageService.addMessageByStudent(message));
+
+	}
+	/**
+	 * This method test addMessage() method and also specify the condition. Check
+	 * that the data is added or not.
+	 * 
+	 * @param value : {@link Value}
+	 */
+	@Test
+	public void addMessagesByAdminTest() {
+		Message message = new Message("Exams have postponed", 0, 108, "2021-01-23");
+		when(repository.save(message)).thenReturn(message);
+		assertEquals(message, iMessageService.addMessageByAdmin(message));
 
 	}
     

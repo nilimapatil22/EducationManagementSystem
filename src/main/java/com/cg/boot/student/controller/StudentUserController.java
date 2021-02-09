@@ -44,7 +44,7 @@ public class StudentUserController {
 
 	@PostMapping("/addStudent")
 	public User addUser(@Valid @RequestBody User userDetails) {
-		User userInfo = userService.addUser(userDetails);
+		User userInfo = userService.addUserStudent(userDetails);
 		if (userInfo == null) {
 			throw new DataNotFoundException("User info should not be null");
 		}
@@ -101,7 +101,7 @@ public class StudentUserController {
 
 	@PutMapping("/updateStudent")
 	public ResponseEntity<User> updateUserDetails(@Valid @RequestBody User user) {
-		User userInfo = userService.updateUserDetails(user);
+		User userInfo = userService.updateUserDetailsStudent(user);
 		if (userInfo == null) {
 			logger.warn("Student Details not found to update");
 			throw new DataNotFoundException("No user present to update");

@@ -32,7 +32,7 @@ public class StudentMessageController {
 	Logger logger = LoggerFactory.getLogger(StudentMessageController.class);
 
 	/**
-	 * This method accepts and saves message which user has inserted through object.
+	 * This method accepts and saves message which student has inserted through object.
 	 * Return an object of message containing all arguments which has been saved.
 	 * 
 	 * @param messageDetails : {@link Message}
@@ -40,7 +40,7 @@ public class StudentMessageController {
 	 */
 	@PostMapping("/addStudentMessage")
 	public Message addMessage(@Valid @RequestBody Message messageDetails) {
-		Message messageInfo = messageService.addMessage(messageDetails);
+		Message messageInfo = messageService.addMessageByStudent(messageDetails);
 		logger.info("Message added successfully");
 		return messageInfo;
 

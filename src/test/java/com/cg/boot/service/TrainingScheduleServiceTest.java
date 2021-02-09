@@ -1,6 +1,7 @@
 package com.cg.boot.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -18,7 +19,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import com.cg.boot.model.TrainingSchedule;
 import com.cg.boot.repository.TrainingScheduleRepository;
 import com.fasterxml.jackson.annotation.JacksonInject.Value;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 /**
  * 
  * @author Priyanka

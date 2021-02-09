@@ -34,7 +34,7 @@ public class MessageController {
 	Logger logger = LoggerFactory.getLogger(MessageController.class);
 
 	/**
-	 * This method accepts and saves message which user has inserted through object.
+	 * This method accepts and saves message which admin has inserted through object.
 	 * Return an object of message containing all arguments which has been saved.
 	 * 
 	 * @param messageDetails : {@link Message}
@@ -42,7 +42,7 @@ public class MessageController {
 	 */
 	@PostMapping("/addMessage")
 	public Message addMessage(@Valid @RequestBody Message messageDetails) {
-		Message messageInfo = messageService.addMessage(messageDetails);
+		Message messageInfo = messageService.addMessageByAdmin(messageDetails);
 		logger.info("Message Added Successfully");
 		return messageInfo;
 

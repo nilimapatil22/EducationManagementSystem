@@ -12,14 +12,18 @@ import com.cg.boot.model.User;
  */
 public interface IUserService {
 
-	User addUser(User user);
-
 	User getUser(int id);
 
 	List<User> getAllUsers();
 
-	User updateUserDetails(@Valid User user);
-
 	List<User> deleteUser(int id);
+
+	User addUserAdmin(User userDetails);
+
+	User addUserStudent(User userDetails);
+
+	User updateUserDetailsStudent(@Valid User user);
+
+	User updateUserDetailsAdmin(@Valid User user);
 
 }

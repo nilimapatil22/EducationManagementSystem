@@ -29,7 +29,8 @@ public class Message implements Serializable {
 	private int messageId;
 	@NotEmpty(message = "Message should not be empty")
 	@Size(min = 4, message = "Minimum 4 chars required")
-	private String message;
+	@Column(name = "message_value")
+	private String messageValue;
 	@Column(name = "student_id")
 	@NotNull(message = "Student Id should not be empty")
 	private int studentId;
@@ -45,18 +46,18 @@ public class Message implements Serializable {
 
 	}
 
-	public Message(int messageId, String message, int studentId, int createdByUserId, String createdDate) {
+	public Message(int messageId, String messageValue, int studentId, int createdByUserId, String createdDate) {
 		super();
 		this.messageId = messageId;
-		this.message = message;
+		this.messageValue = messageValue;
 		this.studentId = studentId;
 		this.createdByUserId = createdByUserId;
 		this.createdDate = createdDate;
 	}
 
-	public Message(String message, int studentId, int createdByUserId, String createdDate) {
+	public Message(String messageValue, int studentId, int createdByUserId, String createdDate) {
 		super();
-		this.message = message;
+		this.messageValue = messageValue;
 		this.studentId = studentId;
 		this.createdByUserId = createdByUserId;
 		this.createdDate = createdDate;
@@ -71,11 +72,11 @@ public class Message implements Serializable {
 	}
 
 	public String getMessage() {
-		return message;
+		return messageValue;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setMessage(String messageValue) {
+		this.messageValue = messageValue;
 	}
 
 	public int getCreatedByUserId() {
@@ -104,7 +105,7 @@ public class Message implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Message [messageId=" + messageId + ", message=" + message + ", studentId=" + studentId
+		return "Message [messageId=" + messageId + ", messageValue=" + messageValue + ", studentId=" + studentId
 				+ ", createdByUserId=" + createdByUserId + ", createdDate=" + createdDate + "]";
 	}
 
