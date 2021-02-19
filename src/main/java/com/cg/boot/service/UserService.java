@@ -30,23 +30,50 @@ public class UserService implements IUserService {
 	Logger logger = LoggerFactory.getLogger(UserService.class);
 
 	/**
-	 * This method saves user details with passed objects. Check if phone number,
-	 * role type, password is matched with the format given in method of validation,
-	 * if not matched it will throw exception otherwise return User.
+	 * This method saves user details of admin with passed objects. Check if phone
+	 * number, role type, password is matched with the format given in method of
+	 * validation, if not matched it will throw exception otherwise return User.
 	 * 
 	 * @param userDetails {@link User}
 	 * @return User {@link User}
 	 * @throws DataNotFoundException
 	 */
 	@Override
-	public User addUser(User userDetails) {
+	public User addUserAdmin(User userDetails) {
+		if (!userDetails.getRoleType().equals("admin")) {
+			throw new DataNotFoundException("you are not authorized");
+		}
 		if (!validatePhoneNumber(userDetails.getPhoneNumber())) {
 			logger.error("Invalid Phone Number");
 			throw new DataNotFoundException("Invalid Phone Number");
 		}
-		if (!validateRoleType(userDetails.getRoleType())) {
-			logger.error("Invalid Role Type");
-			throw new DataNotFoundException("Invalid Role Type");
+
+		if (!validatePassword(userDetails.getPassword())) {
+			logger.error("Invalid Password");
+			throw new DataNotFoundException("Invalid Password");
+		}
+		return repository.save(userDetails);
+	}
+
+	/**
+	 * This method saves user details of student with passed objects. Check if phone
+	 * number, role type, password is matched with the format given in method of
+	 * validation, if not matched it will throw exception otherwise return User.
+	 * 
+	 * @param userDetails {@link User}
+	 * @return User {@link User}
+	 * @throws DataNotFoundException
+	 */
+
+
+	@Override
+	public User addUserStudent(User userDetails) {
+		if (!userDetails.getRoleType().equals("student")) {
+			throw new DataNotFoundException("you are not authorized");
+		}
+		if (!validatePhoneNumber(userDetails.getPhoneNumber())) {
+			logger.error("Invalid Phone Number");
+			throw new DataNotFoundException("Invalid Phone Number");
 		}
 		if (!validatePassword(userDetails.getPassword())) {
 			logger.error("Invalid Password");
@@ -79,26 +106,56 @@ public class UserService implements IUserService {
 	}
 
 	/**
-	 * This method accepts user based on passed object it will update user details.
-	 * Check if phone number,role type, password is matched with the format given in
-	 * method of validation, if not matched it will throw exception otherwise return
-	 * User.
+	 * This method accepts user based on passed object it will update user details
+	 * of student. Check if phone number,role type, password is matched with the
+	 * format given in method of validation, if not matched it will throw exception
+	 * otherwise return User.
+	 * 
+	 * @param user: {@link User}
+	 * @return User {@link User}
+	 * @throws DataNotFoundException
+	 */
+	
+	@Override
+	public User updateUserDetailsStudent(@Valid User user) {
+		User userDetails = getUser(user.getUserId());
+		if (!userDetails.getRoleType().equals("student")) {
+			throw new DataNotFoundException("you are not authorized");
+		}
+		if (userDetails != null) {
+			if (!validatePhoneNumber(user.getPhoneNumber())) {
+				logger.error("Invalid Phone Number");
+				throw new DataNotFoundException("Invalid Phone Number");
+			}
+			if (!validatePassword(user.getPassword())) {
+				logger.error("Invalid Password");
+				throw new DataNotFoundException("Invalid Password");
+			}
+			userDetails = repository.save(user);
+		}
+		return userDetails;
+	}
+
+	/**
+	 * This method accepts user based on passed object it will update user details
+	 * of admin. Check if phone number,role type, password is matched with the
+	 * format given in method of validation, if not matched it will throw exception
+	 * otherwise return User.
 	 * 
 	 * @param user: {@link User}
 	 * @return User {@link User}
 	 * @throws DataNotFoundException
 	 */
 	@Override
-	public User updateUserDetails(@Valid User user) {
+	public User updateUserDetailsAdmin(@Valid User user) {
 		User userDetails = getUser(user.getUserId());
+		if (!userDetails.getRoleType().equals("student")) {
+			throw new DataNotFoundException("you are not authorized");
+		}
 		if (userDetails != null) {
 			if (!validatePhoneNumber(user.getPhoneNumber())) {
 				logger.error("Invalid Phone Number");
 				throw new DataNotFoundException("Invalid Phone Number");
-			}
-			if (!validateRoleType(user.getRoleType())) {
-				logger.error("Invalid Role Type");
-				throw new DataNotFoundException("Invalid Role Type");
 			}
 			if (!validatePassword(user.getPassword())) {
 				logger.error("Invalid Password");

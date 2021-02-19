@@ -10,7 +10,8 @@ import com.cg.boot.model.Message;
  */
 public interface IMessageService {
 
-	public Message addMessage(Message message);
+	public Message addMessageByStudent(Message message);
+	public Message addMessageByAdmin(Message message);
 
 	public Message getMessage(int messageId);
 

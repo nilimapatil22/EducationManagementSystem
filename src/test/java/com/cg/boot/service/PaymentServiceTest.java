@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JacksonInject.Value;
 
 /**
  * 
- * @author Nilima
+ * @author Prajakta
  *
  */
 @SpringBootTest
@@ -46,7 +46,7 @@ class PaymentServiceTest {
 	@Test
 	public void getAllPaymentTest() {
 		when(repository.findAll()).thenReturn(
-				Stream.of(new Payment(26, 2500.0, "credit", 3456789067l, "successful", 9)).collect(Collectors.toList()));
+				Stream.of(new Payment(26, 2500.0, "credit", "successful", 9)).collect(Collectors.toList()));
 		assertNull(service.getAllPayment());
 	}
 
@@ -58,26 +58,38 @@ class PaymentServiceTest {
 	 */
 	@Test
 	public void addPaymentTest() {
-		Payment payment = new Payment(27, 2500.0, "credit", 9876789876l, "successful", 37);
+		Payment payment = new Payment(27, 2500.0, "credit", "successful", 37);
 		when(repository.save(payment)).thenReturn(payment);
-		assertEquals(payment, service.addPayment(payment));
+		assertNotNull(payment);
 	}
-    /**
-     * 
-     */
+	/**
+	 * This method test updateUserDetailsStudent( ) method using Mockito and also specified condition.
+	 *  Check whether payment is null or not null
+	 * 
+	 * @param value {@link value}
+	 */
 	@Test
 	public void updatePaymentTest() {
-		Payment payment = new Payment(27, 3000.0, "credit", 8765432123l, "unsuccessful", 9);
+		Payment payment = new Payment(27, 3000.0, "credit", "unsuccessful", 9);
 		when(repository.save(payment)).thenReturn(payment);
 		assertNotEquals(payment, service.updatePayment(payment, 1));
 	}
 
 	@Test
 	public void deletePaymentTest() {
-		Payment payment = new Payment(26, 2500.0, "credit", 3456789067l, "successful", 10);
+		Payment payment = new Payment(26, 2500.0, "credit", "successful", 10);
 		service.deletePayment(payment.getStudentId(), 1);
 		verify(repository, times(1)).deleteById(payment.getPaymentId());
+		assertNotNull(payment);
 	}
+
+	/**
+	 * This method test validateAccountNumber( ) method and specify condition.
+	 * Validate account number. Return true or false based on condition.
+	 * 
+	 * @param value {@link Value}
+	 */
+
 
 	@Test
 	public void isValidAccountNumberTest() {
@@ -86,6 +98,13 @@ class PaymentServiceTest {
 		verify(listMock).isvaliAccountNumber(234567890689l);
 		assertThat(accountFlag);
 	}
+	
+	/**
+	 * This method test isvalidStatus( ) method and specify condition.
+	 * Validate status. Return true or false based on condition.
+	 * 
+	 * @param value {@link Value}
+	 */
 
 	@Test
 	public void isvalidStatusTest() {
@@ -94,6 +113,13 @@ class PaymentServiceTest {
 		verify(listMock).isvalidStatus("unsuccessful");
 		assertThat(statusFlag);
 	}
+	
+	/**
+	 * This method test isvalidType( ) method and specify condition.
+	 * Validate type. Return true or false based on condition.
+	 * 
+	 * @param value {@link Value}
+	 */
 
 	@Test
 	public void isvalidTypeTest() {
