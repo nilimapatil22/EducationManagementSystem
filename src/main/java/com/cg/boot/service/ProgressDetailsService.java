@@ -31,6 +31,8 @@ public class ProgressDetailsService implements IProgressDetailsService {
 	PreviousProgressDetails previousDetails;
 	@Autowired
 	UserService userService;
+	@Autowired
+	CourseService courseService;
 
 	/**
 	 * This method finds all progress details by grade and return list of progress
@@ -71,6 +73,7 @@ public class ProgressDetailsService implements IProgressDetailsService {
 	public ProgressDetails addProgressDetails(@Valid ProgressDetails progressDetails) {
 		userService.validateAdminId(progressDetails.getAdminId());
 		userService.validateStudentId(progressDetails.getStudentId());
+		courseService.validateCourseId(progressDetails.getCourseId());
 		previousDetails = new PreviousProgressDetails(progressDetails.getGrade(), progressDetails.getDate(),
 				progressDetails.getAdminId(), progressDetails.getStudentId());
 		previousRepository.save(previousDetails);

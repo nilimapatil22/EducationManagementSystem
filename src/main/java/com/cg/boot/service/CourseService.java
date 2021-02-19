@@ -168,6 +168,19 @@ public class CourseService implements ICourseService {
 		return chooseCourses;
 	}
 
+
+		public boolean validateCourseId(int courseId) {
+			 Course course = repository.findById(courseId).orElse(null);
+			   if(course==null) {
+				   throw new DataNotFoundException("Course Id is invalid");
+				   
+			   }
+			   return true;
+			
+		}
+		
+	
+
 	/**
 	 * This method finds courses by passed student Id. Returns list of courses based
 	 * on student Id. Check whether list of courses is empty or not.

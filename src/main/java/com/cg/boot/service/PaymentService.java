@@ -66,9 +66,7 @@ public class PaymentService implements IPaymentService {
 			throw new DataNotFoundException("Enter valid Transaction Type Details either credit or debit");
 
 		}
-		if (!isvaliAccountNumber(payment.getAccountNo())) {
-			throw new DataNotFoundException("Enter Valid Account Number");
-		}
+		
 		return repository.save(payment);
 	}
 
@@ -153,9 +151,7 @@ public class PaymentService implements IPaymentService {
 				throw new DataNotFoundException("Enter valid Transaction Type Details either credit or debit");
 
 			}
-			if (!isvaliAccountNumber(payment.getAccountNo())) {
-				throw new DataNotFoundException("Enter Valid Account Number");
-			}
+			
 			paymentDetails = repository.save(payment);
 		}
 		return paymentDetails;

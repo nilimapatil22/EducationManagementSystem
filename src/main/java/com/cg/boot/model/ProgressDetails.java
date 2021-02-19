@@ -43,30 +43,43 @@ public class ProgressDetails {
 	@Column(name = "admin_Id")
 	@Min(value = 1, message = "Enter valid admin ID")
 	private int adminId;
-
+	
+	@NotNull(message="Enter Course Id")
+	@Column(name="course_Id")
+	private int courseId;
 	public ProgressDetails() {
 
 	}
 
-	public ProgressDetails(int gradeId, String grade, String date, int studentId, int adminId) {
+	public ProgressDetails(int gradeId, String grade, String date,int courseId, int studentId, int adminId) {
 		super();
 		this.gradeId = gradeId;
 		this.grade = grade;
 		this.date = date;
 		this.studentId = studentId;
 		this.adminId = adminId;
+		this.courseId=courseId;
 	}
 
-	public ProgressDetails(String grade, String date, int studentId, int adminId) {
+	public ProgressDetails(String grade, String date,int courseId, int studentId, int adminId) {
 		super();
 		this.grade = grade;
 		this.date = date;
 		this.studentId = studentId;
 		this.adminId = adminId;
+		this.courseId=courseId;
 	}
 
 	public int getGradeId() {
 		return gradeId;
+	}
+
+	public int getCourseId() {
+		return courseId;
+	}
+
+	public void setCourseId(int courseId) {
+		this.courseId = courseId;
 	}
 
 	public void setGradeId(int gradeId) {
@@ -107,8 +120,9 @@ public class ProgressDetails {
 
 	@Override
 	public String toString() {
-		return "Grade [gradeId=" + gradeId + ", grade=" + grade + ", date=" + date + ", studentId=" + studentId
-				+ ", adminId=" + adminId + "]";
+		return "ProgressDetails [gradeId=" + gradeId + ", grade=" + grade + ", date=" + date + ", studentId="
+				+ studentId + ", adminId=" + adminId + ", courseId=" + courseId + "]";
 	}
 
+	
 }

@@ -29,13 +29,10 @@ public class Payment implements Serializable {
 
 	@NotNull(message = "Enter valid Fee Details")
 	@Min(value = 1, message = "Enter valid Fee Details")
-	private double fee;
+	private double amount;
 
 	@Column(name = "payment_Type")
 	private String paymentType;
-
-	@Column(name = "account_No")
-	private long accountNo;
 
 	@Column(name = "payment_Status")
 	private String paymentStatus;
@@ -49,22 +46,20 @@ public class Payment implements Serializable {
 
 	}
 
-	public Payment(int paymentId, double fee, String paymentType, long accountNo, String paymentStatus, int studentId) {
+	public Payment(int paymentId, double amount, String paymentType, String paymentStatus, int studentId) {
 		super();
 		this.paymentId = paymentId;
-		this.fee = fee;
+		this.amount = amount;
 		this.paymentType = paymentType;
-		this.accountNo = accountNo;
 		this.paymentStatus = paymentStatus;
 		this.studentId = studentId;
 
 	}
 
-	public Payment(double fee, String paymentType, long accountNo, String paymentStatus, int studentId) {
+	public Payment(double amount, String paymentType, long accountNo, String paymentStatus, int studentId) {
 		super();
-		this.fee = fee;
+		this.amount = amount;
 		this.paymentType = paymentType;
-		this.accountNo = accountNo;
 		this.paymentStatus = paymentStatus;
 		this.studentId = studentId;
 	}
@@ -78,11 +73,11 @@ public class Payment implements Serializable {
 	}
 
 	public double getFee() {
-		return fee;
+		return amount;
 	}
 
 	public void setFee(long fee) {
-		this.fee = fee;
+		this.amount = fee;
 	}
 
 	public String getPaymentType() {
@@ -91,14 +86,6 @@ public class Payment implements Serializable {
 
 	public void setPaymentType(String paymentType) {
 		this.paymentType = paymentType;
-	}
-
-	public long getAccountNo() {
-		return accountNo;
-	}
-
-	public void setAccountNo(long accountNo) {
-		this.accountNo = accountNo;
 	}
 
 	public String getPaymentStatus() {
@@ -119,8 +106,10 @@ public class Payment implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Payment [paymentId=" + paymentId + ", fee=" + fee + ", paymentType=" + paymentType + ", accountNo="
-				+ accountNo + ", paymentStatus=" + paymentStatus + ", studentId=" + studentId + "]";
+		return "Payment [paymentId=" + paymentId + ", amount=" + amount + ", paymentType=" + paymentType
+				+ ", paymentStatus=" + paymentStatus + ", studentId=" + studentId + "]";
 	}
+
+	
 
 }
