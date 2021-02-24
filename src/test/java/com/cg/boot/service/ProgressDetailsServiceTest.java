@@ -71,7 +71,7 @@ class ProgressDetailsServiceTest {
 	
 	public void deleteProgressDetailsTest() {
 		ProgressDetails details= new ProgressDetails(2, "A", "2021-02-06",2, 9, 1);
-		service.deleteProgressDetails(details.getGradeId(),details.getAdminId());
+		service.deleteProgressDetails(details.getGradeId());
 		verify(repository, times(1)).deleteById(details.getGradeId());
 	}
 	/**

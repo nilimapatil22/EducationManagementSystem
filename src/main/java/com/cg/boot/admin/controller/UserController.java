@@ -2,6 +2,7 @@ package com.cg.boot.admin.controller;
 
 import java.util.List;
 
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +30,7 @@ import com.cg.boot.service.IUserService;
  */
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class UserController {
 	@Autowired
 	IUserService userService;
@@ -47,11 +50,6 @@ public class UserController {
 		if (userInfo == null) {
 			throw new DataNotFoundException("Invalid user information");
 		}
-
-		if (!(userInfo.getRoleType().equals("admin"))) {
-			throw new DataNotFoundException("you are not authorized");
-		}
-
 		logger.info("Admin Added Successfully");
 		return userInfo;
 	}
@@ -64,17 +62,17 @@ public class UserController {
 	 * @return {@link ResponseEntity}: user {@link User} {@link HttpStatus}
 	 */
 
-	@GetMapping("/getUser/{id}")
-	public ResponseEntity<User> getUser(@PathVariable("id") int id) {
-		User user = userService.getUser(id);
+	@GetMapping("/getUser/{userId}")
+	public ResponseEntity<User> getUser(@PathVariable("userId") int userId) {
+		User user = userService.getUser(userId);
 
 		if (user == null) {
-			logger.warn("User not found with ID " + id);
+			logger.warn("User not found with ID " + userId);
 
-			throw new DataNotFoundException("No user present with given id: " + id);
+			throw new DataNotFoundException("No user present with given id: " + userId);
 		}
 
-		logger.info("Admin Details found Successfully with ID " + id);
+		logger.info("Admin Details found Successfully with ID " + userId);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 
 	}
@@ -101,35 +99,19 @@ public class UserController {
 	 * @return {@link ResponseEntity} userInfo {@link HttpStatus}
 	 */
 
-	@PutMapping("/updateUser")
-	public ResponseEntity<User> updateUserDetails(@Valid @RequestBody User user) {
-		User userInfo = userService.updateUserDetailsAdmin(user);
-		if (userInfo == null) {
+	@PutMapping("/updateUser/{userId}")
+	public ResponseEntity<User> updateUserDetails(@PathVariable("userId") int userId,@RequestBody User user) {
+		User updateUser = userService.updateUserDetails(userId, user);
+		if (updateUser == null) {
 			logger.warn("Admin Details not found  to update");
 			throw new DataNotFoundException("No user present to update");
 		}
 		logger.info("Admin updated Successfully ");
-		return new ResponseEntity<User>(userInfo, HttpStatus.OK);
+		return new ResponseEntity<User>(updateUser, HttpStatus.OK);
 	}
+	
 
-	/**
-	 * This method accepts user Id to delete user details based on user Id It will
-	 * check userId, if it is null then it will throw exception. Return list of
-	 * remaining schedules except deleted one.
-	 * 
-	 * @param userId :{@link Integer}
-	 * @return {@link ResponseEntity} user {@link List} {@link HttpStatus}
-	 */
+	
 
-	@DeleteMapping("/delete/{id}")
-	public String deleteUser(@PathVariable("id") int userId) {
-		List<User> user = userService.deleteUser(userId);
-		if (user == null) {
-			logger.info("Admin found to delete with ID " + userId);
-			throw new DataNotFoundException("No user present to delete with given id: " + userId);
-		}
-		logger.info("Admin id deleted successfully");
-		return "user id deleted successfully";
-	}
-
+	
 }

@@ -44,26 +44,60 @@ public class PreviousProgressDetails {
 	@Min(value = 1, message = "Enter valid admin ID")
 	private int adminId;
 
+	@NotNull(message="Enter Course Id")
+	@Column(name="course_Id")
+	private int courseId;
+	
 	public PreviousProgressDetails() {
 
 	}
 
-	public PreviousProgressDetails(int gradeId, String grade, String date, int adminId, int studentId) {
+	
+
+	public PreviousProgressDetails(int gradeId,
+			@NotEmpty(message = "Grade should Not Empty") @Pattern(regexp = "[A-Z]{1}+[+]*", message = "length must be 1 or 2") String grade,
+			@NotEmpty(message = "Date should not empty") @Pattern(regexp = "((?:20)[2-3][1-9])-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])", message = "Date should be in yyyy-MM-dd format") String date,
+			@NotNull(message = "Student Id Should not be blank") @Min(value = 1, message = "Enter valid student ID") int studentId,
+			@NotNull(message = "Admin Id Should not be blank") @Min(value = 1, message = "Enter valid admin ID") int adminId,
+			@NotNull(message = "Enter Course Id") int courseId) {
 		super();
 		this.gradeId = gradeId;
 		this.grade = grade;
 		this.date = date;
 		this.studentId = studentId;
 		this.adminId = adminId;
+		this.courseId = courseId;
 	}
 
-	public PreviousProgressDetails(String grade, String date, int adminId, int studentId) {
+
+
+	public PreviousProgressDetails(
+			@NotEmpty(message = "Grade should Not Empty") @Pattern(regexp = "[A-Z]{1}+[+]*", message = "length must be 1 or 2") String grade,
+			@NotEmpty(message = "Date should not empty") @Pattern(regexp = "((?:20)[2-3][1-9])-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])", message = "Date should be in yyyy-MM-dd format") String date,
+			@NotNull(message = "Student Id Should not be blank") @Min(value = 1, message = "Enter valid student ID") int studentId,
+			@NotNull(message = "Admin Id Should not be blank") @Min(value = 1, message = "Enter valid admin ID") int adminId,
+			@NotNull(message = "Enter Course Id") int courseId) {
 		super();
 		this.grade = grade;
 		this.date = date;
 		this.studentId = studentId;
 		this.adminId = adminId;
+		this.courseId = courseId;
 	}
+
+
+
+	public int getCourseId() {
+		return courseId;
+	}
+
+
+
+	public void setCourseId(int courseId) {
+		this.courseId = courseId;
+	}
+
+
 
 	public int getGradeId() {
 		return gradeId;
@@ -105,10 +139,14 @@ public class PreviousProgressDetails {
 		this.adminId = adminId;
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "Grade [gradeId=" + gradeId + ", grade=" + grade + ", date=" + date + ", studentId=" + studentId
-				+ ", adminId=" + adminId + "]";
+		return "PreviousProgressDetails [gradeId=" + gradeId + ", grade=" + grade + ", date=" + date + ", studentId="
+				+ studentId + ", adminId=" + adminId + ", courseId=" + courseId + "]";
 	}
+
+	
 
 }

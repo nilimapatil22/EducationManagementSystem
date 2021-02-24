@@ -1,7 +1,6 @@
 package com.cg.boot.model;
 
 import javax.persistence.Column;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,13 +10,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-/**
- * @author Madhuri. This class includes declaration of parameters of course
- *         class, default constructor, parameterized constructors, getter and
- *         setter methods of parameters and toString method to display.
- *
- */
 
 @Entity
 @Table(name = "course_master")
@@ -38,9 +30,10 @@ public class Course {
 	@Min(value = 18, message = "must be equal or greater than 18")
 	@Max(value = 60, message = "must be equal or less than 45")
 	private Integer duration;
-	@Column(name = "admin_id")
-	@NotNull(message = "Admin Id should not be null")
-	private int adminId;
+	
+//	@Column(name = "admin_id")
+//	@NotNull(message = "Admin Id should not be null")
+//	private int adminId;
 
 	public Course() {
 
@@ -56,7 +49,7 @@ public class Course {
 		this.courseName = courseName;
 		this.fee = fee;
 		this.duration = duration;
-		this.adminId = adminId;
+//		this.adminId = adminId;
 	}
 
 	public Course(
@@ -68,7 +61,7 @@ public class Course {
 		this.courseName = courseName;
 		this.fee = fee;
 		this.duration = duration;
-		this.adminId = adminId;
+//		this.adminId = adminId;
 	}
 
 	public int getCourseId() {
@@ -103,18 +96,18 @@ public class Course {
 		this.duration = duration;
 	}
 
-	public int getAdminId() {
-		return adminId;
-	}
-
-	public void setAdminId(int adminId) {
-		this.adminId = adminId;
-	}
+//	public int getAdminId() {
+//		return adminId;
+//	}
+//
+//	public void setAdminId(int adminId) {
+//		this.adminId = adminId;
+//	}
 
 	@Override
 	public String toString() {
 		return "Course [courseId=" + courseId + ", courseName=" + courseName + ", fee=" + fee + ", duration=" + duration
-				+ ", adminId=" + adminId + "]";
+				+  "]";
 	}
 
 }

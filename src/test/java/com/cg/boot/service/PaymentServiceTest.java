@@ -46,7 +46,7 @@ class PaymentServiceTest {
 	@Test
 	public void getAllPaymentTest() {
 		when(repository.findAll()).thenReturn(
-				Stream.of(new Payment(26, 2500.0, "credit", "successful", 9)).collect(Collectors.toList()));
+				Stream.of(new Payment(26, 2500.0, "credit", "successful", 9,"202102-02")).collect(Collectors.toList()));
 		assertNull(service.getAllPayment());
 	}
 
@@ -58,7 +58,7 @@ class PaymentServiceTest {
 	 */
 	@Test
 	public void addPaymentTest() {
-		Payment payment = new Payment(27, 2500.0, "credit", "successful", 37);
+		Payment payment = new Payment(27, 2500.0, "credit", "successful", 37,"202102-02");
 		when(repository.save(payment)).thenReturn(payment);
 		assertNotNull(payment);
 	}
@@ -70,14 +70,14 @@ class PaymentServiceTest {
 	 */
 	@Test
 	public void updatePaymentTest() {
-		Payment payment = new Payment(27, 3000.0, "credit", "unsuccessful", 9);
+		Payment payment = new Payment(27, 3000.0, "credit", "unsuccessful", 9,"202102-02");
 		when(repository.save(payment)).thenReturn(payment);
 		assertNotEquals(payment, service.updatePayment(payment, 1));
 	}
 
 	@Test
 	public void deletePaymentTest() {
-		Payment payment = new Payment(26, 2500.0, "credit", "successful", 10);
+		Payment payment = new Payment(26, 2500.0, "credit", "successful", 10,"202102-02");
 		service.deletePayment(payment.getStudentId(), 1);
 		verify(repository, times(1)).deleteById(payment.getPaymentId());
 		assertNotNull(payment);

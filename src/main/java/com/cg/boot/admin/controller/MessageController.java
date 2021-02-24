@@ -2,6 +2,7 @@ package com.cg.boot.admin.controller;
 
 import java.util.List;
 
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +30,7 @@ import com.cg.boot.service.IMessageService;
  */
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class MessageController {
 	@Autowired
 	IMessageService messageService;
@@ -120,10 +123,9 @@ public class MessageController {
 	 * @param userId    : {@link Integer}
 	 * @return {@link ResponseEntity}: messageList {@link List}, {@link HttpStatus}
 	 */
-	@DeleteMapping("/deleteMessage/{messageId}/{userId}")
-	public ResponseEntity<List<Message>> deleteMessage(@PathVariable("messageId") int messageId,
-			@PathVariable("userId") int userId) {
-		List<Message> messageList = messageService.deleteMessage(messageId, userId);
+	@DeleteMapping("/deleteMessage/{messageId}")
+	public ResponseEntity<List<Message>> deleteMessage(@PathVariable("messageId") int messageId) {
+		List<Message> messageList = messageService.deleteMessage(messageId);
 		logger.info("Message Details Deleted with Id " + messageId);
 		return new ResponseEntity<List<Message>>(messageList, HttpStatus.OK);
 	}

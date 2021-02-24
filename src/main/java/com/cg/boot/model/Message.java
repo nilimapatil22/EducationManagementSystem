@@ -26,16 +26,17 @@ public class Message implements Serializable {
 	@GeneratedValue
 	@Column(name = "message_id")
 	private int messageId;
+	
+	@Column(name = "message_value")
 	@NotEmpty(message = "Message should not be empty")
 	@Size(min = 4, message = "Minimum 4 chars required")
-	@Column(name = "message_value")
-	private String messageValue;
+	private String message;
+	
 	@Column(name = "student_id")
 	@NotNull(message = "Student Id should not be empty")
 	private int studentId;
-	@Column(name = "created_by_user_id")
-	@NotNull(message = "User Id should not be empty")
-	private int createdByUserId;
+
+	
 	@Column(name = "created_date")
 	@NotEmpty(message = "Date should not be empty")
 	@Pattern(regexp = "((?:20)[2-3][1-9])-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])", message = "Date should be in yyyy-MM-dd format")
@@ -45,20 +46,18 @@ public class Message implements Serializable {
 
 	}
 
-	public Message(int messageId, String messageValue, int studentId, int createdByUserId, String createdDate) {
+	public Message(int messageId, String message, int studentId, String createdDate) {
 		super();
 		this.messageId = messageId;
-		this.messageValue = messageValue;
+		this.message = message;
 		this.studentId = studentId;
-		this.createdByUserId = createdByUserId;
 		this.createdDate = createdDate;
 	}
 
-	public Message(String messageValue, int studentId, int createdByUserId, String createdDate) {
+	public Message(String message, int studentId, String createdDate) {
 		super();
-		this.messageValue = messageValue;
+		this.message = message;
 		this.studentId = studentId;
-		this.createdByUserId = createdByUserId;
 		this.createdDate = createdDate;
 	}
 
@@ -71,19 +70,11 @@ public class Message implements Serializable {
 	}
 
 	public String getMessage() {
-		return messageValue;
+		return message;
 	}
 
 	public void setMessage(String messageValue) {
-		this.messageValue = messageValue;
-	}
-
-	public int getCreatedByUserId() {
-		return createdByUserId;
-	}
-
-	public void setCreatedByUserId(int createdById) {
-		this.createdByUserId = createdById;
+		this.message = messageValue;
 	}
 
 	public String getCreatedDate() {
@@ -104,8 +95,8 @@ public class Message implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Message [messageId=" + messageId + ", messageValue=" + messageValue + ", studentId=" + studentId
-				+ ", createdByUserId=" + createdByUserId + ", createdDate=" + createdDate + "]";
+		return "Message [messageId=" + messageId + ", message=" + message + ", studentId=" + studentId
+				+ ", createdDate=" + createdDate + "]";
 	}
 
 }

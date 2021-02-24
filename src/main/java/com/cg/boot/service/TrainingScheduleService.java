@@ -2,6 +2,7 @@ package com.cg.boot.service;
 
 import java.util.List;
 
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.cg.boot.exceptions.DataNotFoundException;
 import com.cg.boot.model.TrainingSchedule;
 import com.cg.boot.repository.TrainingScheduleRepository;
+
 
 /**
  * 
@@ -31,6 +33,8 @@ public class TrainingScheduleService implements ITrainingScheduleService {
 	UserService userService;
 	@Autowired
 	CourseService courseService;
+	@Autowired
+	TrainerService trainerService;
 	Logger logger = LoggerFactory.getLogger(TrainingScheduleService.class);
 
 	/**
@@ -42,9 +46,7 @@ public class TrainingScheduleService implements ITrainingScheduleService {
 	 */
 	@Override
 	public TrainingSchedule addSchedule(TrainingSchedule schedule) {
-		userService.validateAdminId(schedule.getCreatedByUserId());
-		userService.validateStudentId(schedule.getStudentId());
-		courseService.validateCourse(schedule.getCourseName());
+		//userService.validateStudentId(schedule.getStudentId());
 		TrainingSchedule trainingSchedule = repository.save(schedule);
 		return trainingSchedule;
 	}
@@ -103,19 +105,15 @@ public class TrainingScheduleService implements ITrainingScheduleService {
 	 * @return {@link TrainingSchedule}
 	 */
 	@Override
-	public TrainingSchedule updateSchedule(TrainingSchedule schedule) {
-		userService.validateAdminId(schedule.getCreatedByUserId());
-		userService.validateStudentId(schedule.getStudentId());
-		courseService.validateCourse(schedule.getCourseName());
-		if (!isValidDate(schedule.getDate())) {
-			logger.error("Invalid date format");
-			throw new DataNotFoundException("Date should be in yyyy-MM-dd format");
-		}
-		if (getSchedule(schedule.getScheduleId()) == null) {
-			logger.error("No Schedule found to update");
-			throw new DataNotFoundException("No schedule present to update");
-		}
-		return repository.save(schedule);
+	public TrainingSchedule updateSchedule(int scheduleId,TrainingSchedule schedule) {
+		return repository.findById(scheduleId).map(scheduleEntity ->{
+			scheduleEntity.setStudentId(schedule.getStudentId());
+			scheduleEntity.setCourseName(schedule.getCourseName());
+			scheduleEntity.setTrainerName(schedule.getTrainerName());
+			scheduleEntity.setStartDate(schedule.getStartDate());
+			scheduleEntity.setEndDate(schedule.getEndDate());
+			return repository.save(scheduleEntity);
+		}).orElseThrow(() ->new DataNotFoundException());
 	}
 
 	/**
@@ -130,9 +128,9 @@ public class TrainingScheduleService implements ITrainingScheduleService {
 	 * @return {@link List}
 	 */
 	@Override
-	public List<TrainingSchedule> deleteSchedule(int scheduleId, int userId) {
-		userService.validateAdminId(userId);
-		if (getSchedule(scheduleId) == null) {
+	public List<TrainingSchedule> deleteSchedule(int scheduleId) {
+		
+		if (repository.findById(scheduleId) == null) {
 			logger.warn("No schedule present to delete");
 			throw new DataNotFoundException("No schedule present to delete with given id: " + scheduleId);
 		}

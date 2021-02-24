@@ -69,12 +69,12 @@ public class TrainerServiceTest {
 	 * 
 	 * @param value : {@link Value}
 	 */
-	@Test
-	public void deleteTrainer() {
-		Trainer trainer = new Trainer(30, "Sai", "8756453498", "sai@gmail.com", "TDD with JUnit 5", 6);
-		service.deleteTrainer(trainer.getTrainerId(), trainer.getAdminId());
-		verify(repository, times(1)).deleteById(trainer.getTrainerId());
-	}
+//	@Test
+//	public void deleteTrainer() {
+//		Trainer trainer = new Trainer(30, "Sai", "8756453498", "sai@gmail.com", "TDD with JUnit 5", 6);
+//		service.deleteTrainer(trainer.getTrainerId(), trainer.getAdminId());
+//		verify(repository, times(1)).deleteById(trainer.getTrainerId());
+//	}
 
 	/**
 	 * This method test updateReturn() method and specify the condition. Check that
@@ -82,12 +82,12 @@ public class TrainerServiceTest {
 	 * 
 	 * @param value : {@link Value}
 	 */
-	@Test
-	public void updateTrainer() {
-		Trainer trainer = new Trainer(30, "Sai Acuity", "8756483498", "sai@gmail.com", "TDD with JUnit 5", 6);
-		when(repository.save(trainer)).thenReturn(trainer);
-		assertNotEquals(trainer, service.updateTrainer(trainer));
-	}
+//	@Test
+//	public void updateTrainer() {
+//		Trainer trainer = new Trainer(30, "Sai Acuity", "8756483498", "sai@gmail.com", "TDD with JUnit 5", 6);
+//		when(repository.save(trainer)).thenReturn(trainer);
+//		assertNotEquals(trainer, service.updateTrainer(trainer));
+//	}
 
 	/**
 	 * This method test isValidTrainerPhoneNo() method and specify the condition.

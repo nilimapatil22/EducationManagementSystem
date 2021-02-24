@@ -2,6 +2,7 @@ package com.cg.boot.student.controller;
 
 import java.util.List;
 
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +30,7 @@ import com.cg.boot.service.IUserService;
  */
 @RestController
 @RequestMapping("/api")
+@CrossOrigin("*")
 public class StudentUserController {
 	@Autowired
 	IUserService userService;
@@ -41,15 +44,12 @@ public class StudentUserController {
 	 * @param : userDetails {@link User}
 	 * @return : User {@link User}
 	 */
-
+     //http://localhost:7171/api/addStudent
 	@PostMapping("/addStudent")
 	public User addUser(@Valid @RequestBody User userDetails) {
 		User userInfo = userService.addUserStudent(userDetails);
 		if (userInfo == null) {
 			throw new DataNotFoundException("User info should not be null");
-		}
-		if (!userInfo.getRoleType().equals("student")) {
-			throw new DataNotFoundException("you are not authorized");
 		}
 		logger.info("Student Added Sucessfully");
 		return userInfo;
@@ -63,15 +63,15 @@ public class StudentUserController {
 	 * @param id {@link User}
 	 * @return {@link ResponseEntity}: user {@link User} {@link HttpStatus}
 	 */
-
-	@GetMapping("/getStudent/{id}")
-	public ResponseEntity<User> getUser(@PathVariable("id") int id) {
-		User user = userService.getUser(id);
+	 //http://localhost:7171/api/getStudent/{id}
+	@GetMapping("/getStudent/{userId}")
+	public ResponseEntity<User> getUser(@PathVariable("userId") int userId) {
+		User user = userService.getUser(userId);
 		if (user == null) {
-			logger.warn("No user present with given id: " + id);
-			throw new DataNotFoundException("No user present with given id: " + id);
+			logger.warn("No user present with given id: " + userId);
+			throw new DataNotFoundException("No user present with given id: " + userId);
 		}
-		logger.info("Student Details Return successfully with ID " + id);
+		logger.info("Student Details Return successfully with ID " + userId);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 
 	}
@@ -81,7 +81,7 @@ public class StudentUserController {
 	 * 
 	 * @return {@link ResponseEntity}: userList{@link List} {@link HttpStatus}
 	 */
-
+     //http://localhost:7171/api/getAllStudent
 	@GetMapping("/getAllStudent")
 	public ResponseEntity<List<User>> getAllUsers() {
 		List<User> userList = userService.getAllUsers();
@@ -99,16 +99,16 @@ public class StudentUserController {
 	 * @return {@link ResponseEntity} userInfo {@link HttpStatus}
 	 */
 
-	@PutMapping("/updateStudent")
-	public ResponseEntity<User> updateUserDetails(@Valid @RequestBody User user) {
-		User userInfo = userService.updateUserDetailsStudent(user);
-		if (userInfo == null) {
-			logger.warn("Student Details not found to update");
-			throw new DataNotFoundException("No user present to update");
-		}
-		logger.info("Updated All student Details successfully");
-		return new ResponseEntity<User>(userInfo, HttpStatus.OK);
-	}
+//	@PutMapping("/updateStudent")
+//	public ResponseEntity<User> updateUserDetails(@Valid @RequestBody User user) {
+//		User userInfo = userService.updateUserDetails(user);
+//		if (userInfo == null) {
+//			logger.warn("Student Details not found to update");
+//			throw new DataNotFoundException("No user present to update");
+//		}
+//		logger.info("Updated All student Details successfully");
+//		return new ResponseEntity<User>(userInfo, HttpStatus.OK);
+//	}
 
 	/**
 	 * This method accepts user Id to delete user details based on user Id It will
@@ -119,7 +119,7 @@ public class StudentUserController {
 	 * @param userId :{@link Integer}
 	 * @return {@link ResponseEntity} user {@link List} {@link HttpStatus}
 	 */
-
+  //http://localhost:7171/api/deleteStudent
 	@DeleteMapping("/deleteStudent/{id}")
 	public String deleteUser(@PathVariable("id") int id) {
 		List<User> user = userService.deleteUser(id);

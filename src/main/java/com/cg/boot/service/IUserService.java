@@ -22,8 +22,10 @@ public interface IUserService {
 
 	User addUserStudent(User userDetails);
 
-	User updateUserDetailsStudent(@Valid User user);
+//	User updateUserDetailsStudent(@Valid User user);
+//
+//	User updateUserDetailsAdmin(@Valid User user);
 
-	User updateUserDetailsAdmin(@Valid User user);
+	User updateUserDetails(int userId, User user);
 
 }

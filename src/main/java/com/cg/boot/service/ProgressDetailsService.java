@@ -1,6 +1,7 @@
 package com.cg.boot.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,6 +17,8 @@ import com.cg.boot.model.ProgressDetails;
 import com.cg.boot.repository.PreviousProgressDetailsRepository;
 import com.cg.boot.repository.ProgressDetailsRepository;
 
+import ch.qos.logback.core.joran.conditional.ThenOrElseActionBase;
+
 /**
  * @author Nilima
  *
@@ -28,6 +31,7 @@ public class ProgressDetailsService implements IProgressDetailsService {
 	ProgressDetailsRepository repository;
 	@Autowired
 	PreviousProgressDetailsRepository previousRepository;
+
 	PreviousProgressDetails previousDetails;
 	@Autowired
 	UserService userService;
@@ -73,9 +77,9 @@ public class ProgressDetailsService implements IProgressDetailsService {
 	public ProgressDetails addProgressDetails(@Valid ProgressDetails progressDetails) {
 		userService.validateAdminId(progressDetails.getAdminId());
 		userService.validateStudentId(progressDetails.getStudentId());
-		courseService.validateCourseId(progressDetails.getCourseId());
+		//courseService.validateCourse(progressDetails.getCourseId());
 		previousDetails = new PreviousProgressDetails(progressDetails.getGrade(), progressDetails.getDate(),
-				progressDetails.getAdminId(), progressDetails.getStudentId());
+				progressDetails.getCourseId(),progressDetails.getAdminId(), progressDetails.getStudentId());
 		previousRepository.save(previousDetails);
 		return repository.save(progressDetails);
 	}
@@ -89,16 +93,25 @@ public class ProgressDetailsService implements IProgressDetailsService {
 	 * @return ProgressDetails {@link ProgressDetails}
 	 */
 	@Override
-	public ProgressDetails updateProgressDetails(ProgressDetails progressDetails) {
-		userService.validateAdminId(progressDetails.getAdminId());
-		userService.validateStudentId(progressDetails.getStudentId());
-		if (!isValidDate(progressDetails.getDate())) {
-			throw new DataNotFoundException("Date should be in yyyy-MM-dd format");
-		}
-		previousDetails = new PreviousProgressDetails(progressDetails.getGrade(), progressDetails.getDate(),
-				progressDetails.getAdminId(), progressDetails.getStudentId());
-		previousRepository.save(previousDetails);
+	public ProgressDetails updateProgressDetails(ProgressDetails progressDetails,int gradeId) {
+		return repository.findById(gradeId).map(progressDetailsEntity ->{
+			progressDetailsEntity.setGrade(progressDetails.getGrade());
+			progressDetailsEntity.setDate(progressDetails.getDate());
+			progressDetailsEntity.setCourseId(progressDetails.getCourseId());
+			progressDetailsEntity.setStudentId(progressDetails.getStudentId());
+			progressDetailsEntity.setAdminId(progressDetails.getAdminId());
 		return repository.save(progressDetails);
+		}).orElseThrow(()->new DataNotFoundException());
+	
+//		userService.validateAdminId(progressDetails.getAdminId());
+//		userService.validateStudentId(progressDetails.getStudentId());
+//		if (!isValidDate(progressDetails.getDate())) {
+//			throw new DataNotFoundException("Date should be in yyyy-MM-dd format");
+//		}
+//		previousDetails = new PreviousProgressDetails(progressDetails.getGrade(), progressDetails.getDate(),
+//				progressDetails.getCourseId(),progressDetails.getAdminId(), progressDetails.getStudentId());
+//		previousRepository.save(previousDetails);
+//		return repository.save(progressDetails);
 	}
 
 	/**
@@ -111,8 +124,8 @@ public class ProgressDetailsService implements IProgressDetailsService {
 	 * @return list {@link List}
 	 */
 	@Override
-	public List<ProgressDetails> deleteProgressDetails(int progressId, int userId) {
-		userService.validateAdminId(userId);
+	public List<ProgressDetails> deleteProgressDetails(int progressId) {
+		//userService.validateAdminId(userId);
 		repository.deleteById(progressId);
 		return repository.findAll();
 	}
@@ -160,4 +173,8 @@ public class ProgressDetailsService implements IProgressDetailsService {
 
 	}
 
+	@Override
+	public List<PreviousProgressDetails> getAllPreviousProgressDetails() {
+		return previousRepository.findAll();
+	}
 }

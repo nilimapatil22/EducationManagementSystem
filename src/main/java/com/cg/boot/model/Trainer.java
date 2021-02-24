@@ -1,7 +1,6 @@
 package com.cg.boot.model;
 
 import javax.persistence.Column;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,13 +9,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-/**
- * @author Madhuri This class includes declaration of parameters of trainer
- *         class, default constructor, parameterized constructors, getter and
- *         setter methods of parameters and toString method to display.
- *
- */
 
 @Entity
 @Table(name = "trainer_master")
@@ -44,9 +36,9 @@ public class Trainer {
 	@NotEmpty(message = "Course name should Not be empty")
 	private String courseName;
 
-	@Column(name = "admin_id")
-	@NotNull(message = "Admin Id should not null")
-	private int adminId;
+//	@Column(name = "admin_id")
+//	@NotNull(message = "Admin Id should not null")
+//	private int adminId;
 
 	public Trainer() {
 
@@ -64,7 +56,7 @@ public class Trainer {
 		this.phoneNo = phoneNo;
 		this.email = email;
 		this.courseName = courseName;
-		this.adminId = adminId;
+//		this.adminId = adminId;
 	}
 
 	public Trainer(
@@ -78,7 +70,7 @@ public class Trainer {
 		this.phoneNo = phoneNo;
 		this.email = email;
 		this.courseName = courseName;
-		this.adminId = adminId;
+//		this.adminId = adminId;
 	}
 
 	public Integer getTrainerId() {
@@ -121,18 +113,18 @@ public class Trainer {
 		this.courseName = courseName;
 	}
 
-	public int getAdminId() {
-		return adminId;
-	}
-
-	public void setAdminId(int adminId) {
-		this.adminId = adminId;
-	}
+//	public int getAdminId() {
+//		return adminId;
+//	}
+//
+//	public void setAdminId(int adminId) {
+//		this.adminId = adminId;
+//	}
 
 	@Override
 	public String toString() {
 		return "Trainer [trainerId=" + trainerId + ", trainerName=" + trainerName + ", phoneNo=" + phoneNo + ", email="
-				+ email + ", courseName=" + courseName + ", adminId=" + adminId + "]";
+				+ email + ", courseName=" + courseName +  "]";
 	}
 
 }

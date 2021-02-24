@@ -4,11 +4,10 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,11 +27,11 @@ import com.cg.boot.service.ICourseService;
  */
 
 @RestController
-@RequestMapping
+@RequestMapping("/api")
+@CrossOrigin
 public class CourseController {
 	@Autowired
-	ICourseService courseService;
-	Logger logger = LoggerFactory.getLogger(CourseController.class);
+	ICourseService service;
 
 	/**
 	 * This method accepts and saves courses which user has inserted through object.
@@ -41,11 +40,11 @@ public class CourseController {
 	 * @param course : {@link Course}
 	 * @return Course : {@link Course}
 	 */
-
-	@PostMapping("/addCourse")
+	
+	//http://localhost:7171/api/Course
+	@PostMapping("/Course")
 	public Course addCourse(@Valid @RequestBody Course course) {
-		Course addCourse = courseService.addCourse(course);
-		logger.info("Course Added Successfully");
+		Course addCourse = service.addCourse(course);
 		return addCourse;
 	}
 
@@ -53,20 +52,18 @@ public class CourseController {
 	 * This method accepts course Id which user has inserted. Return response entity
 	 * containing course details based on course Id.
 	 * 
-	 * @throws DataNotFoundException
 	 * @param id : {@link Integer}
 	 * @return {@link ResponseEntity}:course {@link Course}, {@link HttpStatus}
 	 */
-
+	
+	//http://localhost:7171/api/getCourse/6
 	@GetMapping("/getCourse/{id}")
 	public ResponseEntity<Course> getCourse(@PathVariable("id") int id) {
 
-		Course getCourse = courseService.getCourse(id);
+		Course getCourse = service.getCourse(id);
 		if (getCourse == null) {
-			logger.warn("Course Id Not Found");
 			throw new DataNotFoundException("No Course present with the given id ");
 		}
-		logger.info("Course Details Found");
 		return new ResponseEntity<Course>(getCourse, HttpStatus.OK);
 	}
 
@@ -75,11 +72,11 @@ public class CourseController {
 	 * 
 	 * @return {@link ResponseEntity}: courseList {@link List}, {@link HttpStatus}
 	 */
-
+	
+	//http://localhost:7171/api/getAllCourses
 	@GetMapping("/getAllCourses")
-	public ResponseEntity<List<Course>> getCourses() throws Exception {
-		List<Course> getCourses = courseService.getAllCourses();
-		logger.info("Course Details Found");
+	public ResponseEntity<List<Course>> getCourses() {
+		List<Course> getCourses = service.getAllCourses();
 		return new ResponseEntity<List<Course>>(getCourses, HttpStatus.OK);
 	}
 
@@ -88,19 +85,16 @@ public class CourseController {
 	 * object. Return response entity containing details of course which has been
 	 * updated.
 	 * 
-	 * @throws DataNotFoundException
 	 * @param course : {@link Course}
 	 * @return {@link ResponseEntity}: course {@link Course}, {@link HttpStatus}
 	 */
-
-	@PutMapping("/updateCourse")
-	public ResponseEntity<Course> updateCourse(@Valid @RequestBody Course course) {
-		Course updateCourse = courseService.updateCourse(course);
+	//http://localhost:7171/api/updateCourse
+	@PutMapping("/updateCourse/{courseId}")
+	public ResponseEntity<Course> updateCourse(@PathVariable("courseId") int courseId, @RequestBody Course course) {
+		Course updateCourse = service.updateCourse(courseId, course);
 		if (updateCourse == null) {
-			logger.warn("Course Details Not Found to update");
 			throw new DataNotFoundException("Course Details Not Found for update");
 		}
-		logger.info("Course Details Updated successfully");
 		return new ResponseEntity<Course>(updateCourse, HttpStatus.OK);
 	}
 
@@ -109,21 +103,17 @@ public class CourseController {
 	 * user Id to check authorized user to perform operation. Return list of
 	 * remaining courses except deleted one
 	 * 
-	 * @throws DataNotFoundException
 	 * @param courseId : {@link Integer}
 	 * @param userId   : {@link Integer}
 	 * @return {@link ResponseEntity}: coursesList {@link List}, {@link HttpStatus}
 	 */
-
-	@DeleteMapping("/deleteCourse/{courseId}/{userId}")
-	public ResponseEntity<List<Course>> deleteCourse(@PathVariable("courseId") int courseId,
-			@PathVariable("userId") int userId) {
-		List<Course> course = courseService.deleteCourse(courseId, userId);
+	//http://localhost:7171/api/deleteCourse/6
+	@DeleteMapping("/deleteCourse/{courseId}")
+	public ResponseEntity<List<Course>> deleteCourse(@PathVariable("courseId") int courseId) {
+		List<Course> course = service.deleteCourse(courseId);
 		if (course == null) {
-			logger.warn("Course Details Not Found To Delete");
 			throw new DataNotFoundException("No Course present with the given id: " + courseId);
 		}
-		logger.info("Course Details with  ID " + courseId + " Deleted Successfully");
 		return new ResponseEntity<List<Course>>(course, HttpStatus.OK);
 	}
 

@@ -47,6 +47,7 @@ public class ProgressDetails {
 	@NotNull(message="Enter Course Id")
 	@Column(name="course_Id")
 	private int courseId;
+	
 	public ProgressDetails() {
 
 	}

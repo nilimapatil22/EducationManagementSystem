@@ -8,7 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 /**
  * @author Nilima. This class includes declaration of parameters of payment
@@ -42,26 +44,40 @@ public class Payment implements Serializable {
 	@Column(name = "student_Id")
 	private int studentId;
 
+	
+	@NotEmpty(message = "Date should not empty")
+	@Pattern(regexp = "((?:20)[2-3][1-9])-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])", message = "Date should be in yyyy-MM-dd format")
+	private String date;
+
 	Payment() {
 
 	}
 
-	public Payment(int paymentId, double amount, String paymentType, String paymentStatus, int studentId) {
+	public Payment(
+			@NotNull(message = "Enter valid Fee Details") @Min(value = 1, message = "Enter valid Fee Details") double amount,
+			String paymentType, String paymentStatus,
+			@NotNull(message = "Enter valid student ID") @Min(value = 1, message = "Enter valid student ID") int studentId,
+			@NotEmpty(message = "Date should not empty") @Pattern(regexp = "((?:20)[2-3][1-9])-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])", message = "Date should be in yyyy-MM-dd format") String date) {
+		super();
+		this.amount = amount;
+		this.paymentType = paymentType;
+		this.paymentStatus = paymentStatus;
+		this.studentId = studentId;
+		this.date = date;
+	}
+
+	public Payment(int paymentId,
+			@NotNull(message = "Enter valid Fee Details") @Min(value = 1, message = "Enter valid Fee Details") double amount,
+			String paymentType, String paymentStatus,
+			@NotNull(message = "Enter valid student ID") @Min(value = 1, message = "Enter valid student ID") int studentId,
+			@NotEmpty(message = "Date should not empty") @Pattern(regexp = "((?:20)[2-3][1-9])-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])", message = "Date should be in yyyy-MM-dd format") String date) {
 		super();
 		this.paymentId = paymentId;
 		this.amount = amount;
 		this.paymentType = paymentType;
 		this.paymentStatus = paymentStatus;
 		this.studentId = studentId;
-
-	}
-
-	public Payment(double amount, String paymentType, long accountNo, String paymentStatus, int studentId) {
-		super();
-		this.amount = amount;
-		this.paymentType = paymentType;
-		this.paymentStatus = paymentStatus;
-		this.studentId = studentId;
+		this.date = date;
 	}
 
 	public int getPaymentId() {
@@ -72,12 +88,12 @@ public class Payment implements Serializable {
 		this.paymentId = paymentId;
 	}
 
-	public double getFee() {
+	public double getAmount() {
 		return amount;
 	}
 
-	public void setFee(long fee) {
-		this.amount = fee;
+	public void setAmount(double amount) {
+		this.amount = amount;
 	}
 
 	public String getPaymentType() {
@@ -104,12 +120,20 @@ public class Payment implements Serializable {
 		this.studentId = studentId;
 	}
 
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
 	@Override
 	public String toString() {
 		return "Payment [paymentId=" + paymentId + ", amount=" + amount + ", paymentType=" + paymentType
-				+ ", paymentStatus=" + paymentStatus + ", studentId=" + studentId + "]";
+				+ ", paymentStatus=" + paymentStatus + ", studentId=" + studentId + ", date=" + date + "]";
 	}
 
 	
-
+	
 }

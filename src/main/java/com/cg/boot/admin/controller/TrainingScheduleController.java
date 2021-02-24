@@ -9,12 +9,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.boot.exceptions.DataNotFoundException;
@@ -26,6 +28,8 @@ import com.cg.boot.service.ITrainingScheduleService;
  *
  */
 @RestController
+@RequestMapping("/api")
+@CrossOrigin
 public class TrainingScheduleController {
 	@Autowired
 	ITrainingScheduleService scheduleService;
@@ -106,9 +110,9 @@ public class TrainingScheduleController {
 	 * @return {@link ResponseEntity}: trainingSchedule {@link TrainingSchedule},
 	 *         {@link HttpStatus}
 	 */
-	@PutMapping("/updateSchedule")
-	public ResponseEntity<TrainingSchedule> updateSchedule(@Valid @RequestBody TrainingSchedule schedule) {
-		TrainingSchedule trainingSchedule = scheduleService.updateSchedule(schedule);
+	@PutMapping("/updateSchedule/{scheduleId}")
+	public ResponseEntity<TrainingSchedule> updateSchedule(@PathVariable ("scheduleId") int scheduleId,@RequestBody TrainingSchedule schedule) {
+		TrainingSchedule trainingSchedule = scheduleService.updateSchedule(scheduleId,schedule);
 		logger.info("Training Schedule updated successfully ");
 		return new ResponseEntity<TrainingSchedule>(trainingSchedule, HttpStatus.OK);
 
@@ -124,10 +128,9 @@ public class TrainingScheduleController {
 	 * @return {@link ResponseEntity}: trainingSchedulesList {@link List},
 	 *         {@link HttpStatus}
 	 */
-	@DeleteMapping("/deleteSchedule/{scheduleId}/{userId}")
-	public ResponseEntity<List<TrainingSchedule>> deleteSchedule(@PathVariable("scheduleId") int scheduleId,
-			@PathVariable("userId") int userId) {
-		List<TrainingSchedule> trainingSchedulesList = scheduleService.deleteSchedule(scheduleId, userId);
+	@DeleteMapping("/deleteSchedule/{scheduleId}")
+	public ResponseEntity<List<TrainingSchedule>> deleteSchedule(@PathVariable("scheduleId") int scheduleId) {
+		List<TrainingSchedule> trainingSchedulesList = scheduleService.deleteSchedule(scheduleId);
 		logger.info("Training Schedule Deleted successfully with ID " + scheduleId);
 		return new ResponseEntity<List<TrainingSchedule>>(trainingSchedulesList, HttpStatus.OK);
 	}

@@ -2,7 +2,6 @@ package com.cg.boot.service;
 
 import java.util.List;
 
-
 import java.util.regex.Pattern;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -13,11 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.boot.exceptions.DataNotFoundException;
-import com.cg.boot.model.Course;
 import com.cg.boot.model.User;
 import com.cg.boot.repository.UserRepository;
-
-
 
 /**
  * @author Prajakta
@@ -25,6 +21,7 @@ import com.cg.boot.repository.UserRepository;
  */
 @Service
 @Transactional
+
 public class UserService implements IUserService {
 	@Autowired
 	UserRepository repository;
@@ -66,8 +63,6 @@ public class UserService implements IUserService {
 	 * @throws DataNotFoundException
 	 */
 
-
-	@Override
 	public User addUserStudent(User userDetails) {
 		if (!userDetails.getRoleType().equals("student")) {
 			throw new DataNotFoundException("you are not authorized");
@@ -100,11 +95,14 @@ public class UserService implements IUserService {
 	 * 
 	 * @return {@link List} {@link User}
 	 */
+
 	@Override
 	public List<User> getAllUsers() {
 		return repository.findAll();
 
 	}
+	
+
 
 	/**
 	 * This method accepts user based on passed object it will update user details
@@ -116,26 +114,22 @@ public class UserService implements IUserService {
 	 * @return User {@link User}
 	 * @throws DataNotFoundException
 	 */
-	
-	@Override
-	public User updateUserDetailsStudent(@Valid User user) {
-		User userDetails = getUser(user.getUserId());
-		if (!userDetails.getRoleType().equals("student")) {
-			throw new DataNotFoundException("you are not authorized");
-		}
-		if (userDetails != null) {
-			if (!validatePhoneNumber(user.getPhoneNumber())) {
-				logger.error("Invalid Phone Number");
-				throw new DataNotFoundException("Invalid Phone Number");
-			}
-			if (!validatePassword(user.getPassword())) {
-				logger.error("Invalid Password");
-				throw new DataNotFoundException("Invalid Password");
-			}
-			userDetails = repository.save(user);
-		}
-		return userDetails;
+	public User updateUserDetails(int userId, User user) {
+		return repository.findById(userId).map(userEntity ->{
+			userEntity.setFirstName(user.getFirstName());
+			userEntity.setLastName(user.getLastName());
+			userEntity.setEmail(user.getEmail());
+			userEntity.setPhoneNumber(user.getPhoneNumber());
+			userEntity.setPassword(user.getPassword());
+			userEntity.setAddress(user.getAddress());
+			//userEntity.setRoleType(user.getRoleType());
+			return repository.save(userEntity);
+		
+		}).orElseThrow(() -> new DataNotFoundException());
 	}
+
+	
+		
 
 	/**
 	 * This method accepts user based on passed object it will update user details
@@ -147,27 +141,8 @@ public class UserService implements IUserService {
 	 * @return User {@link User}
 	 * @throws DataNotFoundException
 	 */
-	@Override
-	public User updateUserDetailsAdmin(@Valid User user) {
-		User userDetails = getUser(user.getUserId());
-		if (!userDetails.getRoleType().equals("student")) {
-			throw new DataNotFoundException("you are not authorized");
-		}
-		if (userDetails != null) {
-			if (!validatePhoneNumber(user.getPhoneNumber())) {
-				logger.error("Invalid Phone Number");
-				throw new DataNotFoundException("Invalid Phone Number");
-			}
-			if (!validatePassword(user.getPassword())) {
-				logger.error("Invalid Password");
-				throw new DataNotFoundException("Invalid Password");
-			}
 
-			userDetails = repository.save(user);
-		}
-		return userDetails;
-	}
-
+	
 	/**
 	 * This method delete user details based on passed id, If that id is not null.
 	 * and Return list of all remaining user except deleted one.
@@ -175,6 +150,7 @@ public class UserService implements IUserService {
 	 * @param userId: {@link Integer}
 	 * @return {@link User} {@link List}
 	 */
+
 
 	@Override
 	public List<User> deleteUser(int userId) {
@@ -238,11 +214,11 @@ public class UserService implements IUserService {
 
 	public boolean validatePassword(String password) {
 		boolean flag = false;
-		String passregex = "^(?=.*[0-9])" + "(?=.*[a-z])(?=.*[A-Z])" + "(?=.*[@#$%^&+=])" + "(?=\\S+$).{8,20}$";
-		if (Pattern.matches(passregex, password)) {
-			flag = true;
-		} else {
+		
+		if (password.length()<8||password.length()>20) {
 			flag = false;
+		} else {
+			flag = true;
 		}
 		return flag;
 	}
@@ -291,8 +267,6 @@ public class UserService implements IUserService {
 		return true;
 	}
 
-	
-	
 	
 
 }

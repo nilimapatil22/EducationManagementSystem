@@ -21,7 +21,7 @@ public interface IMessageService {
 
 	public Message updateMessage(Message message);
 
-	public List<Message> deleteMessage(int messageId, int userId);
+	public List<Message> deleteMessage(int messageId);
 
 	public boolean isValidMessage(String message);
 

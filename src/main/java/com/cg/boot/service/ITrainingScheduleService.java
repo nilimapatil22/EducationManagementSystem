@@ -18,9 +18,9 @@ public interface ITrainingScheduleService {
 
 	List<TrainingSchedule> getScheduleByStudentId(int studentId);
 
-	TrainingSchedule updateSchedule(TrainingSchedule schedule);
+	TrainingSchedule updateSchedule(int scheduleId,TrainingSchedule schedule);
 
-	List<TrainingSchedule> deleteSchedule(int scheduleId,int userId);
+	List<TrainingSchedule> deleteSchedule(int scheduleId);
 
 	boolean isValidDate(String date);
 

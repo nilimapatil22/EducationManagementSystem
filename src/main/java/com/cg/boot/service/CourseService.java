@@ -2,11 +2,13 @@ package com.cg.boot.service;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.cg.boot.exceptions.DataNotFoundException;
@@ -20,17 +22,20 @@ import com.cg.boot.repository.CourseRepository;
  * @author Madhuri
  *
  */
-
 @Service
 @Transactional
 public class CourseService implements ICourseService {
+
 	@Autowired
 	CourseRepository repository;
 	@Autowired
 	ChooseCourseRepository chooseCourseRepository;
 	@Autowired
 	UserService userService;
-	Logger logger = LoggerFactory.getLogger(CourseService.class);
+	
+//	Course course;
+	
+	
 
 	/**
 	 * This method accepts and saves courses which user has inserted through object.
@@ -42,7 +47,7 @@ public class CourseService implements ICourseService {
 
 	@Override
 	public Course addCourse(Course course) {
-		userService.validateAdminId(course.getAdminId());
+//		userService.validateAdminId(course.getAdminId());
 		return repository.save(course);
 	}
 
@@ -81,14 +86,22 @@ public class CourseService implements ICourseService {
 	 */
 
 	@Override
-	public Course updateCourse(Course course) {
-		userService.validateAdminId(course.getAdminId());
-		Course courseDetails = getCourse(course.getCourseId());
-		if (courseDetails != null) {
-			logger.info("Course Details found for update");
-			courseDetails = repository.save(course);
-		}
-		return courseDetails;
+	public Course updateCourse(int courseId, Course course) {
+			
+			return repository.findById(courseId).map(courseEntity -> {
+				courseEntity.setCourseName(course.getCourseName());
+				courseEntity.setFee(course.getFee());
+				courseEntity.setDuration(course.getDuration());
+				return repository.save(courseEntity);
+			}).orElseThrow(() -> new DataNotFoundException());
+
+//		userService.validateAdminId(course.getAdminId());
+//		Course courseDetails = getCourse(course.getCourseId());
+//		if (courseDetails != null) {
+//
+//			courseDetails = repository.save(course);
+//		}
+//		return courseDetails;
 	}
 
 	/**
@@ -101,18 +114,16 @@ public class CourseService implements ICourseService {
 	 * @return {@link ResponseEntity}: coursesList {@link List}, {@link HttpStatus}
 	 */
 
-	@Override
-	public List<Course> deleteCourse(int courseId, int userId) {
-		userService.validateAdminId(userId);
-		repository.deleteById(courseId);
-		return repository.findAll();
-	}
+//	@Override
+//	public List<Course> deleteCourse(int courseId) {
+//		repository.deleteById(courseId);
+//		return repository.findAll();
+//	}
 
 	/**
-	 * This method validate the course. Check name of passed course. Return true or
-	 * false based on condition.
+	 * This method validate the course. Check name of passed course. Return
+	 * true or false based on condition.
 	 * 
-	 * @throws DataNotFoundException
 	 * @param course     : {@link String}
 	 * @param courseName :{@link String}
 	 * @return flag : {@link Boolean}
@@ -128,8 +139,8 @@ public class CourseService implements ICourseService {
 	}
 
 	/**
-	 * This method performs choose Course Details. Check if selected course is
-	 * present in database or not. Return course name and Id based on student Id.
+	 * This method performs choose Course Details. Check if selected course is present
+	 * in database or not. Return course name and Id based on student Id.
 	 * 
 	 * @param courseId  : {@link Integer}
 	 * @param studentId : {@link Integer}
@@ -141,7 +152,6 @@ public class CourseService implements ICourseService {
 		ChooseCourse chooseCourse = null;
 		Course course = repository.findById(courseId).orElse(null);
 		if (course != null) {
-			logger.warn("Course Details not found for Choose Course");
 			chooseCourse = new ChooseCourse(studentId, courseId, course.getCourseName());
 		}
 		chooseCourseRepository.save(chooseCourse);
@@ -153,7 +163,6 @@ public class CourseService implements ICourseService {
 	 * This method finds courses by passed student Id. Returns list of courses based
 	 * on student Id. Check whether list of courses is empty or not.
 	 * 
-	 * @throws DataNotFoundException
 	 * @param studentId : {@link Integer}
 	 * @return {@link List}
 	 */
@@ -162,57 +171,34 @@ public class CourseService implements ICourseService {
 	public List<ChooseCourse> getChoosedCoursesByStudentId(int studentId) {
 		List<ChooseCourse> chooseCourses = chooseCourseRepository.findAllByStudentId(studentId);
 		if (chooseCourses.isEmpty()) {
-			logger.warn("Course Details not found for ID " + studentId);
 			throw new DataNotFoundException("Choosed Courses not found");
 		}
 		return chooseCourses;
 	}
 
+	@Override
+	public List<Course> deleteCourse(int courseId) {
+		repository.deleteById(courseId);
+		return repository.findAll();
+	}
 
-		public boolean validateCourseId(int courseId) {
-			 Course course = repository.findById(courseId).orElse(null);
-			   if(course==null) {
-				   throw new DataNotFoundException("Course Id is invalid");
-				   
-			   }
-			   return true;
-			
-		}
-		
-	
-
-	/**
-	 * This method finds courses by passed student Id. Returns list of courses based
-	 * on student Id. Check whether list of courses is empty or not.
-	 * 
-	 * @param studentId : {@link Integer}
-	 * @return {@link List}
-	 */
-
-
+	@Override
+	public ChooseCourse enrollCourse(int studentId,ChooseCourse course) {
+		course.setStudentId(studentId);
+		return chooseCourseRepository.save(course);
+	}
 
 	
 
-	/*
-	 * @Override public List<Course> getCoursesByStudentId(int studentId) {
-	 * List<Course> list = repository.findAllByStudentId(studentId); if
-	 * (list.isEmpty()) {
-	 * logger.warn("No Courses are present with given student id: " + studentId);
-	 * throw new
-	 * DataNotFoundException("No Courses are present with given student id: " +
-	 * studentId); } return list; }
-	 */
-
-
-	/*@Override
-	public List<Course> getCoursesByStudentId(int studentId) {
-		List<Course> list = repository.findAllByStudentId(studentId);
-		if (list.isEmpty()) {
-			logger.warn("No Courses are present with given student id: " + studentId);
-			throw new DataNotFoundException("No Courses are present with given student id: " + studentId);
-		}
-		return list;
-	}*/
-
+//	@Override
+//	public List<ChooseCourse> getChoosedCourseByCourseId(int courseId) {
+//		userService.validateCourseId(courseId);
+//		List<ChooseCourse> choose=chooseCourseRepository.findAllByCourseId(courseId);
+//		if(choose.isEmpty())
+//		{
+//			throw new DataNotFoundException("choosed courses not found");
+//		}
+//		return choose;
+//	}
 
 }

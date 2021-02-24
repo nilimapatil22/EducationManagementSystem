@@ -25,7 +25,6 @@ import com.cg.boot.service.IPaymentService;
  *
  */
 @RestController
-
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api")
 public class PaymentController {

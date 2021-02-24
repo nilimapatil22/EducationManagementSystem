@@ -37,11 +37,6 @@ public class MessageService implements IMessageService {
 	 */
 	@Override
 	public Message addMessageByStudent(Message message) {
-		if (userService.getUser(message.getCreatedByUserId()) == null) {
-			logger.warn("Invalid User Id");
-			throw new DataNotFoundException("Invalid User Id");
-		}
-		userService.validateStudentId(message.getCreatedByUserId());
 		return repository.save(message);
 
 	}
@@ -55,11 +50,6 @@ public class MessageService implements IMessageService {
 	 */
 	@Override
 	public Message addMessageByAdmin(Message message) {
-		if (userService.getUser(message.getCreatedByUserId()) == null) {
-			logger.warn("Invalid User Id");
-			throw new DataNotFoundException("Invalid User Id");
-		}
-		userService.validateAdminId(message.getCreatedByUserId());
 		return repository.save(message);
 
 	}
@@ -117,15 +107,8 @@ public class MessageService implements IMessageService {
 	@SuppressWarnings("null")
 	@Override
 	public Message updateMessage(Message message) {
-		userService.validateAdminId(message.getCreatedByUserId());
-
-		if (!isValidMessage(message.getMessage())) {
-			throw new DataNotFoundException("Message should has min 4 chars");
-		}
-		if (!isValidDate(message.getCreatedDate())) {
-			throw new DataNotFoundException("Date should be in yyyy-MM-dd format");
-		}
-		if (getMessage(message.getMessageId()) == null) {
+		if (repository.findById(message.getMessageId()) == null) {
+			logger.warn("Invalid messageId");
 			throw new DataNotFoundException("No message present to update");
 		}
 
@@ -143,9 +126,8 @@ public class MessageService implements IMessageService {
 	 * @return {@link List}
 	 */
 	@Override
-	public List<Message> deleteMessage(int messageId, int userId) {
-		userService.validateAdminId(userId);
-		if (getMessage(messageId) == null) {
+	public List<Message> deleteMessage(int messageId) {
+		if (repository.findById(messageId) == null) {
 			logger.warn("No message present to delete with given id: " + messageId);
 			throw new DataNotFoundException("No message present to delete with given id: " + messageId);
 		}
